@@ -1,0 +1,41 @@
+# Configuracion base del proyecto. Las rutas son relativas a la raiz del repo.
+seed: 42
+
+data:
+  # Mirror oficial de PhysioNet en AWS (Open Data). physionet.org sirve el mismo
+  # contenido pero desde aqui la descarga del zip iba a ~50 KB/s.
+  url: https://physionet-open.s3.amazonaws.com/ptb-xl/1.0.3/
+  raw_dir: data/raw            # aqui queda ptb-xl/ (csv + records100)
+  processed_dir: data/processed
+  sampling_rate: 100           # 100 Hz (records100). 500 Hz pesa ~5x mas.
+  classes: [NORM, MI, STTC, CD, HYP]
+  # Folds oficiales de PTB-XL (estratificados y sin pacientes repetidos entre folds).
+  folds:
+    train: [1, 2, 3, 4, 5, 6, 7, 8]
+    val: [9]
+    test: [10]
+
+features:
+  include_metadata: true       # edad y sexo como features adicionales
+  bands_hz: [[0.5, 5], [5, 15], [15, 40]]
+
+baseline:
+  models: [random_forest, xgboost]
+  tune_thresholds_on_val: true # umbral por clase elegido en val, nunca en test
+  random_forest:
+    n_estimators: 500
+    max_depth: null
+    min_samples_leaf: 2
+    class_weight: balanced_subsample
+    n_jobs: -1
+  xgboost:
+    n_estimators: 600
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    tree_method: hist
+    n_jobs: -1
+
+outputs:
+  dir: outputs

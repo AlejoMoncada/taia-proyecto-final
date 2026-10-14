@@ -1,0 +1,30 @@
+# Datos (PTB-XL se descarga con scripts, no se versiona)
+data/
+*.zip
+
+# Salidas pesadas; se versionan solo los resumenes que se indiquen
+outputs/*
+!outputs/.gitkeep
+
+# Secretos
+.env
+*.key
+secrets/
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Notebooks y editores
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+
+# Tooling local del agente
+.atl/
