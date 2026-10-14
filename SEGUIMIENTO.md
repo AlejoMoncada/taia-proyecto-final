@@ -17,10 +17,15 @@ Cierre en Moodle: dom 18 oct 2026 23:59. El profe pedira ampliar a dom 25 oct (v
 - En Teams el grupo hablo (13 oct) de un video de "como estamos entrenando".
 
 ## Estado
-- [ ] Tema elegido con el grupo
+- [ ] Tema elegido con el grupo (se avanzo con PTB-XL; falta confirmarlo con el grupo)
 - [ ] Roles repartidos
+- [x] Esqueleto del repo (14 oct): uv + pyproject/uv.lock, configs/default.yaml, src/ecg, tests, notebooks, outputs, README, .gitignore
+- [x] Descarga PTB-XL + split por paciente (14 oct): `uv run python -m ecg.data`. Mirror S3 de PhysioNet con verificacion SHA256 (physionet.org iba a ~50 KB/s). Folds 1-8/9/10 y chequeo de que ningun paciente se repite.
+  Resultado: 21.388 ECG con superclase; train 17.084 / val 2.146 / test 2.158, prevalencias parejas.
 - [ ] Plan (formativa)
-- [ ] Linea base
+- [x] Linea base (14 oct): `uv run python -m ecg.baseline`. 210 features (estadisticos, bandas Welch, FC/RR, edad, sexo) + RF y XGBoost, umbrales por clase elegidos en val.
+  Test: XGBoost F1 macro 0,690 / AUC 0,890 / ECE 0,048 (53 s); RF F1 0,650 / AUC 0,866 (23 s). Tabla en README, detalle en outputs/baseline/.
+  Pendiente: correr con 2-3 semillas para reportar varianza.
 - [ ] Modelo avanzado + experimentos
 - [ ] Informe unico PDF
 - [ ] Diapositivas
