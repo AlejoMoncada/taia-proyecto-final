@@ -68,12 +68,11 @@ def get_features(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, float]:
 def main() -> None:
     ap = argparse.ArgumentParser(description="Entrena y evalua la linea base clasica.")
     ap.add_argument("--config", default="configs/default.yaml")
+    ap.add_argument("--seeds", type=int, nargs="+",
+                    help="Repite el entrenamiento con varias semillas y reporta media y desviacion")
     args = ap.parse_args()
     cfg = load_config(args.config)
-    seed = cfg["seed"]
-    set_seed(seed)
     classes = cfg["data"]["classes"]
-    bcfg = cfg["baseline"]
 
     df, feats, feat_time = get_features(cfg)
     if not cfg["features"]["include_metadata"]:
@@ -91,6 +90,37 @@ def main() -> None:
         "n_features": X["train"].shape[1],
         "n": {k: len(v) for k, v in X.items()},
     }
+
+    if not args.seeds:
+        summary = pd.DataFrame(run_seed(cfg, cfg["seed"], X, y, env, out_root))
+        summary.to_csv(out_root / "summary.csv", index=False, float_format="%.4f")
+        print(f"\nResumen en {out_root / 'summary.csv'}")
+        return
+
+    # Mismas particiones y features; solo cambia la semilla de los modelos.
+    seeds_root = out_root / "seeds"
+    rows = []
+    for seed in args.seeds:
+        print(f"\n######## semilla {seed} ########")
+        rows += [r | {"seed": seed} for r in run_seed(cfg, seed, X, y, env, seeds_root / f"seed_{seed}")]
+    runs = pd.DataFrame(rows)
+    runs.to_csv(seeds_root / "runs.csv", index=False, float_format="%.4f")
+    metrics = [c for c in runs.columns if c not in ("model", "split", "seed")]
+    agg = runs.groupby(["model", "split"])[metrics].agg(["mean", "std"])
+    agg.columns = [f"{m}_{s}" for m, s in agg.columns]
+    agg.to_csv(seeds_root / "summary_seeds.csv", float_format="%.4f")
+    print(f"\nSemillas {args.seeds}. Resumen en {seeds_root / 'summary_seeds.csv'}")
+    for (model, split), r in agg.iterrows():
+        if split == "test":
+            print(f"  {model:14s} F1 macro {r['f1_macro_mean']:.3f} ± {r['f1_macro_std']:.3f}"
+                  f"  AUC macro {r['roc_auc_macro_mean']:.3f} ± {r['roc_auc_macro_std']:.3f}")
+
+
+def run_seed(cfg: dict, seed: int, X: dict, y: dict, env: dict, out_root: Path) -> list[dict]:
+    """Entrena y evalua todos los modelos con una semilla; guarda resultados en out_root/<modelo>."""
+    set_seed(seed)
+    classes = cfg["data"]["classes"]
+    bcfg = cfg["baseline"]
     rows = []
     for name in bcfg["models"]:
         print(f"\n== {name} ==")
@@ -136,10 +166,7 @@ def main() -> None:
         print(f"val  F1 macro={res['val']['f1_macro']:.3f} AUC macro={res['val']['roc_auc_macro']:.3f}")
         print(f"test F1 macro={res['test']['f1_macro']:.3f} AUC macro={res['test']['roc_auc_macro']:.3f}"
               f"  (entrenamiento {fit_s:.1f} s)")
-
-    summary = pd.DataFrame(rows)
-    summary.to_csv(out_root / "summary.csv", index=False, float_format="%.4f")
-    print(f"\nResumen en {Path(out_root) / 'summary.csv'}")
+    return rows
 
 
 if __name__ == "__main__":

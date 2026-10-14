@@ -25,7 +25,7 @@ Cierre en Moodle: dom 18 oct 2026 23:59. El profe pedira ampliar a dom 25 oct (v
 - [ ] Plan (formativa)
 - [x] Linea base (14 oct): `uv run python -m ecg.baseline`. 210 features (estadisticos, bandas Welch, FC/RR, edad, sexo) + RF y XGBoost, umbrales por clase elegidos en val.
   Test: XGBoost F1 macro 0,690 / AUC 0,890 / ECE 0,048 (53 s); RF F1 0,650 / AUC 0,866 (23 s). Tabla en README, detalle en outputs/baseline/.
-  Pendiente: correr con 2-3 semillas para reportar varianza.
+  Semillas 42/43/44 (`--seeds`): XGBoost F1 0,692 ± 0,002, AUC 0,891 ± 0,001; RF F1 0,652 ± 0,002, AUC 0,866 ± 0,001. La semilla 42 reproduce exacto la primera corrida.
 - [ ] Modelo avanzado + experimentos
 - [ ] Informe unico PDF
 - [ ] Diapositivas

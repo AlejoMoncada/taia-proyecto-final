@@ -70,6 +70,21 @@ Resultados en test (fold 10, n = 2.158, semilla 42, CPU AMD de 12 hilos):
 F1 por clase con XGBoost: NORM 0,81 · MI 0,64 · STTC 0,71 · CD 0,68 · HYP 0,60. HYP, la clase menos
 frecuente (12 %), es la más difícil. La extracción de las 210 features tarda unos 42 s para los 21.388 ECG.
 
+Para medir la variación entre corridas repetimos el entrenamiento con tres semillas (mismas particiones y
+features; solo cambia la semilla de los modelos):
+
+```bash
+uv run python -m ecg.baseline --seeds 42 43 44
+```
+
+| Modelo (test, media ± desv.) | F1 macro | ROC-AUC macro | ECE |
+|------------------------------|---------:|--------------:|----:|
+| Random Forest | 0,652 ± 0,002 | 0,866 ± 0,001 | 0,073 ± 0,000 |
+| XGBoost       | 0,692 ± 0,002 | 0,891 ± 0,001 | 0,049 ± 0,001 |
+
+La diferencia entre XGBoost y Random Forest (unos 4 puntos de F1) es mucho mayor que la variación por
+semilla. El detalle por corrida queda en `outputs/baseline/seeds/`.
+
 ## Métricas
 
 F1 macro y por clase, ROC-AUC macro y por clase, matriz de confusión por clase, calibración (Brier, ECE y
