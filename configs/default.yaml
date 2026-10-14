@@ -37,5 +37,58 @@ baseline:
     tree_method: hist
     n_jobs: -1
 
+# ---------------------------------------------------------------- redes profundas
+deep:
+  device: auto                 # cuda si esta disponible, si no cpu
+  batch_size: 128
+  max_epochs: 60
+  max_minutes: 5               # tope de tiempo de pared por entrenamiento
+  early_stopping_patience: 8   # epocas sin mejorar ROC-AUC macro en val
+  models: [cnn1d, cnn_lstm]
+  # Valores por defecto; la busqueda los sobreescribe.
+  cnn1d:
+    channels: [64, 64, 128, 128]
+    kernel_size: 7
+    dropout: 0.2
+    lr: 0.001
+    weight_decay: 0.0001
+  cnn_lstm:
+    channels: [64, 64, 128]
+    kernel_size: 7
+    lstm_hidden: 64
+    dropout: 0.2
+    lr: 0.001
+    weight_decay: 0.0001
+
+# ---------------------------------------------------------------- ajuste de hiperparametros
+# Presupuesto comparable entre familias: mismo numero de configuraciones aleatorias,
+# mismo criterio de seleccion (ROC-AUC macro en val) y mismas semillas finales.
+# Test no se usa para elegir nada. Los tiempos se reportan aparte.
+search:
+  n_trials: 8
+  seed: 123
+  metric: roc_auc_macro
+  final_seeds: [42, 43, 44]
+  space:
+    xgboost:
+      n_estimators: [300, 600, 1000]
+      max_depth: [3, 4, 6, 8]
+      learning_rate: [0.03, 0.05, 0.1]
+      subsample: [0.7, 0.8, 1.0]
+      colsample_bytree: [0.5, 0.8, 1.0]
+      min_child_weight: [1, 5]
+    cnn1d:
+      lr: [0.0003, 0.001, 0.003]
+      dropout: [0.1, 0.2, 0.3]
+      kernel_size: [5, 7, 11]
+      channels: [[32, 32, 64, 64], [64, 64, 128, 128], [64, 128, 128, 256]]
+      weight_decay: [0.0, 0.0001, 0.001]
+    cnn_lstm:
+      lr: [0.0003, 0.001, 0.003]
+      dropout: [0.1, 0.2, 0.3]
+      kernel_size: [5, 7, 11]
+      lstm_hidden: [32, 64, 128]
+      weight_decay: [0.0, 0.0001, 0.001]
+
 outputs:
   dir: outputs
