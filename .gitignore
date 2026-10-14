@@ -28,3 +28,16 @@ dist/
 
 # Tooling local del agente
 .atl/
+
+# Modelos y arrays pesados
+*.joblib
+*.pkl
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.npy
+*.npz
+*.h5
+*.parquet
