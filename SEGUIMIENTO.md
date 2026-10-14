@@ -22,11 +22,14 @@ Cierre en Moodle: dom 18 oct 2026 23:59. El profe pedira ampliar a dom 25 oct (v
 - [x] Esqueleto del repo (14 oct): uv + pyproject/uv.lock, configs/default.yaml, src/ecg, tests, notebooks, outputs, README, .gitignore
 - [x] Descarga PTB-XL + split por paciente (14 oct): `uv run python -m ecg.data`. Mirror S3 de PhysioNet con verificacion SHA256 (physionet.org iba a ~50 KB/s). Folds 1-8/9/10 y chequeo de que ningun paciente se repite.
   Resultado: 21.388 ECG con superclase; train 17.084 / val 2.146 / test 2.158, prevalencias parejas.
-- [ ] Plan (formativa)
+- [x] Plan (formativa), borrador (14 oct): `docs/plan.md`. Faltan del grupo: autores, cronograma, roles, declaracion de uso de IA y pasarlo a PDF.
+- [x] Fichas (14 oct): `docs/ficha_datos.md` y `docs/ficha_modelo.md`.
 - [x] Linea base (14 oct): `uv run python -m ecg.baseline`. 210 features (estadisticos, bandas Welch, FC/RR, edad, sexo) + RF y XGBoost, umbrales por clase elegidos en val.
   Test: XGBoost F1 macro 0,690 / AUC 0,890 / ECE 0,048 (53 s); RF F1 0,650 / AUC 0,866 (23 s). Tabla en README, detalle en outputs/baseline/.
   Semillas 42/43/44 (`--seeds`): XGBoost F1 0,692 ± 0,002, AUC 0,891 ± 0,001; RF F1 0,652 ± 0,002, AUC 0,866 ± 0,001. La semilla 42 reproduce exacto la primera corrida.
-- [ ] Modelo avanzado + experimentos
+- [x] Modelo avanzado + experimentos (14 oct): CNN 1D y CNN+LSTM (`ecg.deep`), busqueda de 8 configs por familia (tambien XGBoost, `ecg.tune_xgb`), 3 semillas, comparacion en `ecg.compare` -> outputs/comparison/.
+  Test: CNN+LSTM F1 0,750 ± 0,003 / AUC 0,928; CNN 1D F1 0,744 ± 0,005 / AUC 0,927; XGBoost ajustado F1 0,690 / AUC 0,894.
+  Pendiente: evaluacion por subgrupos (sexo, edad, equipo), prueba estadistica entre modelos, recalibracion.
 - [ ] Informe unico PDF
 - [ ] Diapositivas
 - [ ] Ensayo de sustentacion

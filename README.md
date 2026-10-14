@@ -35,6 +35,10 @@ Requiere [uv](https://docs.astral.sh/uv/).
 uv sync                                   # instala dependencias (versiones fijadas en uv.lock)
 uv run python -m ecg.data                 # descarga PTB-XL, hace el split y cachea las señales
 uv run python -m ecg.baseline             # línea base clásica (features + RF / XGBoost)
+uv run python -m ecg.tune_xgb             # búsqueda de XGBoost en val + 3 semillas
+uv run python -m ecg.deep search --model cnn1d     # búsqueda de la CNN 1D (igual con cnn_lstm)
+uv run python -m ecg.deep final --model cnn1d      # mejor configuración con 3 semillas
+uv run python -m ecg.compare              # tabla y figuras comparativas en outputs/comparison/
 uv run pytest                             # pruebas
 ```
 
@@ -46,7 +50,8 @@ Para probar otra configuración: `uv run python -m ecg.baseline --config configs
 ```
 configs/      configuración en YAML
 src/ecg/      código: datos, features, métricas, modelos
-tests/        pruebas (split sin fuga, features, métricas)
+tests/        pruebas (split sin fuga, features, métricas, redes, comparación)
+docs/         plan, ficha de datos y ficha del modelo
 notebooks/    exploración
 outputs/      resultados de cada corrida (métricas, figuras, modelos)
 ```
@@ -84,6 +89,38 @@ uv run python -m ecg.baseline --seeds 42 43 44
 
 La diferencia entre XGBoost y Random Forest (unos 4 puntos de F1) es mucho mayor que la variación por
 semilla. El detalle por corrida queda en `outputs/baseline/seeds/`.
+
+## Redes profundas y comparación
+
+Dos redes leen las 12 derivaciones en bruto (1.000 muestras), normalizadas por derivación con estadísticas
+de train: una CNN 1D residual y una CNN+LSTM (bloques residuales más una LSTM bidireccional). Se entrenan
+con AdamW, parada temprana sobre el ROC-AUC macro de val y un tope de 5 minutos por corrida en una
+GTX 1660 SUPER.
+
+Para que la comparación sea justa, cada familia (XGBoost, CNN 1D, CNN+LSTM) tiene el mismo presupuesto de
+búsqueda: 8 configuraciones aleatorias, elegidas por ROC-AUC macro en val. La mejor se entrena con las
+semillas 42, 43 y 44. Test no participa en ninguna elección. El tiempo total no se iguala; se reporta.
+
+| Modelo (test, media ± desv.) | F1 macro | ROC-AUC macro | Brier | ECE | Entrenamiento | Búsqueda |
+|------------------------------|---------:|--------------:|------:|----:|--------------:|---------:|
+| Random Forest     | 0,652 ± 0,002 | 0,866 ± 0,001 | 0,119 | 0,073 | 19 s  | -       |
+| XGBoost por defecto | 0,692 ± 0,002 | 0,891 ± 0,001 | 0,104 | 0,049 | 55 s  | -       |
+| XGBoost ajustado  | 0,690 ± 0,004 | 0,894 ± 0,001 | 0,107 | 0,068 | 92 s  | 319 s   |
+| CNN 1D            | 0,744 ± 0,005 | 0,927 ± 0,001 | 0,085 | 0,040 | 137 s | 1.454 s |
+| CNN+LSTM          | 0,750 ± 0,003 | 0,928 ± 0,001 | 0,084 | 0,039 | 170 s | 1.302 s |
+
+Las redes superan a XGBoost por unos 5 puntos de F1 y 3 de AUC, y además calibran mejor. La ganancia
+está sobre todo en MI y CD; en HYP casi no mejoran (F1 ≈ 0,60 en todos). CNN 1D y CNN+LSTM quedan
+dentro de la variación entre semillas. Ajustar XGBoost no cambió nada relevante: los valores por defecto
+ya estaban bien.
+
+Dos configuraciones de la CNN 1D (32 canales, kernel 7) corrieron a ~90 s por época, probablemente por
+el modo determinista de cuDNN, y el tope de 5 minutos las cortó en la época 4. Es una limitación conocida
+de la búsqueda; el detalle está en `docs/ficha_modelo.md`.
+
+Tabla completa (F1 por clase, inferencia), curvas, F1 por clase, calibración y tiempos en
+`outputs/comparison/`; matrices de confusión por semilla en `outputs/deep/final/<modelo>/seed_<s>/`.
+Fichas: `docs/ficha_datos.md` y `docs/ficha_modelo.md`. Plan: `docs/plan.md`.
 
 ## Métricas
 

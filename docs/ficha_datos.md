@@ -56,7 +56,7 @@ Lo que sigue lo dicen los autores; no lo podemos verificar con los archivos. Seg
 - **Edad.** En `features.py`, toda edad mayor de 120 (el código 300) pasa a ser valor perdido. La línea base la imputa con la mediana de train, dentro del pipeline (`SimpleImputer`).
 - **Sexo.** Lo usamos como número (0 o 1).
 - **Línea base.** 210 características por registro: estadísticos de amplitud de cada derivación, cruces por cero, potencia de Welch en tres bandas y frecuencia cardiaca y variabilidad RR de la derivación II. Se agregan edad y sexo. El escalado (`StandardScaler`) se ajusta solo con train.
-- **Redes profundas.** Está previsto normalizar cada derivación con medias y desviaciones de train. Ese paso todavía no está implementado en `src/ecg`.
+- **Redes profundas.** Cada derivación se normaliza con la media y la desviación estándar calculadas solo con train (`ecg.deep.lead_stats`). La normalización se aplica al vuelo al leer la caché, también para val y test.
 
 ## Particiones
 

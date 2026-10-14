@@ -84,7 +84,7 @@ La comparación entre familias sigue estas reglas:
 
 No igualamos el tiempo total entre familias: XGBoost necesita mucho menos tiempo que las redes para entrenar, y esa diferencia de costo es parte de lo que reportamos. Todos los tiempos de entrenamiento, búsqueda e inferencia quedan registrados. Las corridas se hacen en un AMD Ryzen 5 3600 con 32 GB de RAM. Las redes usan una GPU NVIDIA GTX 1660 SUPER de 6 GB.
 
-Resultados: pendientes para la entrega 2.
+Primeros resultados en prueba (media ± desviación sobre tres semillas): XGBoost ajustado logra F1 macro 0,690 ± 0,004 y ROC-AUC macro 0,894 ± 0,001. La CNN 1D logra 0,744 ± 0,005 y 0,927 ± 0,001. La CNN+LSTM logra 0,750 ± 0,003 y 0,928 ± 0,001. La búsqueda eligió kernel 5 y dropout 0,1 en ambas redes. El detalle está en `docs/ficha_modelo.md`, y el análisis completo queda para la entrega 2.
 
 ## 7. Riesgos de sesgo y privacidad
 
