@@ -9,3 +9,8 @@ Objetivo: montar el proyecto de ML (tema propuesto: clasificacion de ECG con PTB
 - Metricas: F1 macro y por clase, ROC-AUC, matriz de confusion, calibracion, tiempo y costo.
 - Ve marcando avances en SEGUIMIENTO.md. No hagas push a GitHub ni publiques nada sin que Alejandro lo pida.
 - Textos (README, informe) en espanol natural, sin sonar a IA.
+
+## Forma de trabajo
+- Opus orquesta y decide: plan, decisiones de diseno experimental, revision de resultados y lo que se reporta.
+- Delegar todo lo posible a subagentes con model haiku: descargas, scripts, tests, graficas, borradores de redaccion y revisiones mecanicas.
+- Cada delegacion lleva instrucciones concretas (archivos, criterio de aceptacion, comando de verificacion); Opus revisa lo que devuelve antes de aceptarlo.
