@@ -30,6 +30,10 @@ Cierre en Moodle: dom 18 oct 2026 23:59. El profe pedira ampliar a dom 25 oct (v
 - [x] Modelo avanzado + experimentos (14 oct): CNN 1D y CNN+LSTM (`ecg.deep`), busqueda de 8 configs por familia (tambien XGBoost, `ecg.tune_xgb`), 3 semillas, comparacion en `ecg.compare` -> outputs/comparison/.
   Test: CNN+LSTM F1 0,750 ± 0,003 / AUC 0,928; CNN 1D F1 0,744 ± 0,005 / AUC 0,927; XGBoost ajustado F1 0,690 / AUC 0,894.
   Pendiente: evaluacion por subgrupos (sexo, edad, equipo), prueba estadistica entre modelos, recalibracion.
-- [ ] Informe unico PDF
-- [ ] Diapositivas
+- [x] Borradores PDF: `output/pdf/plan.pdf` (5 pag), `ejecucion.pdf` (6), `informe.pdf` (10). Fuentes en docs/ y evidencia congelada con hashes en docs/evidence/. No estan aprobados para entrega.
+- [x] Diapositivas en borrador: `output/pdf/diapositivas.pdf` (10), fuente editable `docs/diapositivas.md`.
+- [x] Guia de ensayo: `docs/guia_sustentacion.md`, recorrido propuesto de 10 minutos y preguntas de defensa.
+- [ ] Revision y aprobacion del grupo: tema, autores, roles, cronograma, declaracion final de IA; confirmar en Moodle la fecha vigente. No se afirma que la prorroga este aprobada.
+- [ ] Informe y presentacion definitivos tras esa revision. Pesos fuera de git; definir canal autorizado si se deben entregar.
 - [ ] Ensayo de sustentacion
+- [x] Repositorio privado creado por autorizacion de Alejandro: https://github.com/AlejoMoncada/taia-proyecto-final. Una sola rama remota de entrega, `entrega`; invitaciones al equipo pendientes de sus usuarios de GitHub. No se cambia a publico sin autorizacion.

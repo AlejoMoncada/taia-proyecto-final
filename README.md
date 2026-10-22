@@ -2,6 +2,9 @@
 
 Maestría en IA, Universidad de La Sabana.
 
+Repositorio de trabajo privado: https://github.com/AlejoMoncada/taia-proyecto-final,
+rama `entrega`. El acceso del equipo requiere invitación; la publicación definitiva queda pendiente de autorización.
+
 Clasificamos electrocardiogramas de 12 derivaciones en las 5 superclases diagnósticas de PTB-XL
 (NORM, MI, STTC, CD, HYP). Es un problema **multietiqueta**: un mismo ECG puede tener, por ejemplo,
 infarto (MI) y alteraciones del ST (STTC) a la vez.
@@ -126,6 +129,30 @@ Fichas: `docs/ficha_datos.md` y `docs/ficha_modelo.md`. Plan: `docs/plan.md`.
 
 F1 macro y por clase, ROC-AUC macro y por clase, matriz de confusión por clase, calibración (Brier, ECE y
 diagrama de confiabilidad), tiempo de entrenamiento e inferencia. Los resultados quedan en `outputs/<modelo>/`.
+
+## Paquete de entrega local
+
+Los borradores están en [output/pdf/](output/pdf/): [plan](output/pdf/plan.pdf) (5 páginas),
+[ejecución](output/pdf/ejecucion.pdf) (6), [informe](output/pdf/informe.pdf) (10) y
+[diapositivas](output/pdf/diapositivas.pdf) (10). [Guía de ensayo](docs/guia_sustentacion.md).
+Faltan confirmación del grupo, autores, roles, cronograma, declaración final de IA y fecha de Moodle.
+Se comparten como borradores de revisión, no como una entrega aprobada para subir a Moodle.
+Los análisis por subgrupos, bootstrap y recalibración siguen pendientes.
+
+Las fuentes editables son `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md`.
+`docs/evidence/` conserva tablas, figuras y hashes de la evidencia existente, sin datos individuales ni pesos.
+El generador no entrena ni consulta test: usa ese snapshot. En un entorno separado con `reportlab` y `pypdf`:
+
+```bash
+python scripts/build_delivery.py          # genera los cuatro PDF
+python scripts/build_delivery.py --check  # comprueba hashes, texto y límites de páginas sin escribir
+python -m unittest discover -s tests -p test_delivery.py -v
+```
+
+Las herramientas PDF no se agregaron al entorno de entrenamiento. Si no están instaladas, las tres pruebas
+PDF se omiten en `uv run pytest`; deben ejecutarse aparte con el comando anterior. La prueba de atributos
+Git sí puede ejecutarse sin esas herramientas; `.gitattributes` conserva PDF y PNG como archivos binarios.
+Los pesos siguen fuera de git: reproducir el entrenamiento o acordar un canal autorizado para compartirlos.
 
 ## Reproducibilidad
 

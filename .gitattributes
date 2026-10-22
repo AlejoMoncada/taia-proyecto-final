@@ -1,0 +1,3 @@
+# Preserve document and figure bytes across platforms and inherited diff drivers.
+*.pdf binary
+*.png binary
