@@ -22,10 +22,11 @@ import pandas as pd
 import torch
 from sklearn.metrics import f1_score, roc_auc_score
 from torch import nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
 from ecg.data import load_or_build_cache, split_by_folds
-from ecg.metrics import evaluate, plot_confusion, plot_reliability, tune_thresholds
+from ecg.metrics import evaluate, plot_confusion, plot_reliability, tune_thresholds, find_best_temperature, apply_temperature
 from ecg.models import build_model, count_parameters
 from ecg.search import sample_configs
 from ecg.utils import load_config, resolve, save_json, set_seed
@@ -58,7 +59,41 @@ def lead_stats(x_train: Any, rows: np.ndarray | None = None, chunk: int = 512) -
     std = np.sqrt(sq / count)
     # Evita division entre cero en derivaciones planas.
     return mean.astype(np.float32), np.maximum(std, 1e-6).astype(np.float32)
+#EJMO-Ini
+class MultilabelFocalLoss(nn.Module):
+    def __init__(self, alpha=0.25, gamma=2.0, reduction='mean'):
+        super(MultilabelFocalLoss, self).__init__()
+        self.alpha = alpha
+        self.gamma = gamma
+        self.reduction = reduction
 
+    def forward(self, logits, targets):
+        # 1. Calculamos la pérdida BCE base (usando logits por estabilidad numérica)
+        bce_loss = F.binary_cross_entropy_with_logits(logits, targets, reduction='none')
+        
+        # 2. Obtenemos las probabilidades aplicando sigmoide a los logits
+        probs = torch.sigmoid(logits)
+        
+        # 3. Calculamos p_t: probabilidad de la clase correcta
+        # Si target=1, p_t = probs. Si target=0, p_t = 1 - probs.
+        p_t = probs * targets + (1 - probs) * (1 - targets)
+        
+        # 4. Factor modulador Focal: (1 - p_t)^gamma
+        # Reduce drásticamente la pérdida para ejemplos fáciles (donde p_t es cercano a 1)
+        focal_weight = (1 - p_t) ** self.gamma
+        
+        # 5. Factor Alpha: pondera la importancia de positivos (alpha) vs negativos (1 - alpha)
+        alpha_factor = targets * self.alpha + (1 - targets) * (1 - self.alpha)
+        
+        # 6. Pérdida final
+        loss = alpha_factor * focal_weight * bce_loss
+        
+        if self.reduction == 'mean':
+            return loss.mean()
+        elif self.reduction == 'sum':
+            return loss.sum()
+        return loss
+#EJMO-Fin        
 
 class EcgSet(Dataset):
     """Registros de un split: senal normalizada con estadisticas de train, etiqueta multietiqueta."""
@@ -135,7 +170,10 @@ def train_model(model: nn.Module, train_data: Dataset, val_data: Dataset, params
     model.to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=params["lr"], weight_decay=params["weight_decay"])
     sched = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, mode="max", factor=0.5, patience=3)
-    loss_fn = nn.BCEWithLogitsLoss()
+    #EJMO-Ini
+    #loss_fn = nn.BCEWithLogitsLoss()
+    loss_fn = MultilabelFocalLoss(alpha=0.25, gamma=2.0)
+    #EJMO-Fin
     bs = deep_cfg["batch_size"]
     train_dl = DataLoader(train_data, batch_size=bs, shuffle=True, num_workers=0,
                           generator=torch.Generator().manual_seed(seed))
@@ -280,15 +318,33 @@ def run_final(cfg: dict, model_name: str, root: Path, device: torch.device, sets
         seed_dir.mkdir(parents=True, exist_ok=True)
         model, hist, info = fit_once(model_name, params, sets, dcfg, device, seed)
         hist.to_csv(seed_dir / "history.csv", index=False)
+        #EJMO-Ini
+        #p_val = predict_proba(model, sets["val"], device)
+        #thr = tune_thresholds(yv, p_val)
+        #res_val = evaluate(yv, p_val, thr, classes)
 
-        p_val = predict_proba(model, sets["val"], device)
+        #t0 = time.perf_counter()
+        #p_test = predict_proba(model, sets["test"], device)
+        #infer_ms = 1000 * (time.perf_counter() - t0) / len(sets["test"])
+        #res_test = evaluate(yt, p_test, thr, classes)
+
+        logits_val, _ = _forward_all(model, sets["val"], device, INFER_BATCH)
+        t0 = time.perf_counter()
+
+        logits_test, _ = _forward_all(model, sets["test"], device, INFER_BATCH)
+        infer_ms = 1000 * (time.perf_counter() - t0) / len(sets["test"])
+
+        optimal_temp = find_best_temperature(logits_val, yv)
+
+        p_val = apply_temperature(logits_val, optimal_temp)
+        p_test = apply_temperature(logits_test, optimal_temp)
+        
+        print(f"  [Calibración] Temperatura óptima para semilla {seed}: {optimal_temp:.3f}")
+        
         thr = tune_thresholds(yv, p_val)
         res_val = evaluate(yv, p_val, thr, classes)
-
-        t0 = time.perf_counter()
-        p_test = predict_proba(model, sets["test"], device)
-        infer_ms = 1000 * (time.perf_counter() - t0) / len(sets["test"])
         res_test = evaluate(yt, p_test, thr, classes)
+        #EJMO-Fin
 
         np.save(seed_dir / "test_proba.npy", p_test)
         torch.save(model.state_dict(), seed_dir / "model.pt")

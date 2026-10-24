@@ -9,7 +9,51 @@ from sklearn.metrics import (
     multilabel_confusion_matrix,
     roc_auc_score,
 )
+#EJMO-Ini
+import torch
+from torch import nn, optim
+#EJMO-Fin
 
+#EJMO-Ini
+def find_best_temperature(val_logits: np.ndarray, val_labels: np.ndarray) -> float:
+    """
+    Encuentra la temperatura escalar óptima para recalibrar el modelo.
+    Se debe usar SOLO con los logits del conjunto de validación.
+    """
+    # Convertimos los arreglos de numpy a tensores de PyTorch
+    logits_tensor = torch.tensor(val_logits, dtype=torch.float32)
+    labels_tensor = torch.tensor(val_labels, dtype=torch.float32)
+    
+    # Parámetro de temperatura inicializado en 1.0
+    temperature = nn.Parameter(torch.ones(1))
+    
+    # Usamos L-BFGS, estándar para Temperature Scaling por su convergencia rápida
+    nll_criterion = nn.BCEWithLogitsLoss()
+    optimizer = optim.LBFGS([temperature], lr=0.01, max_iter=50)
+    
+    def eval_loss():
+        optimizer.zero_grad()
+        # Escala los logits por la temperatura y calcula el BCE
+        loss = nll_criterion(logits_tensor / temperature, labels_tensor)
+        loss.backward()
+        return loss
+        
+    optimizer.step(eval_loss)
+    
+    # Retornamos el valor numérico (float) de la mejor temperatura
+    return float(temperature.item())
+
+
+def apply_temperature(logits: np.ndarray, temperature: float) -> np.ndarray:
+    """
+    Aplica la temperatura calculada a los logits y los transforma 
+    en probabilidades finales [0, 1].
+    """
+    scaled_logits = torch.tensor(logits, dtype=torch.float32) / temperature
+    # Convertimos a probabilidades usando sigmoide y devolvemos a numpy
+    probs = torch.sigmoid(scaled_logits).numpy()
+    return probs
+#EJMO-Fin
 
 def expected_calibration_error(y: np.ndarray, p: np.ndarray, n_bins: int = 10) -> float:
     """ECE de una clase con bins de igual ancho."""
@@ -97,3 +141,49 @@ def plot_confusion(cms: dict[str, list], path) -> None:
     fig.tight_layout()
     fig.savefig(path, dpi=150)
     plt.close(fig)
+
+#EJMO-Ini
+def bootstrap_patient_metrics(y_true: np.ndarray, y_pred_probs: np.ndarray, patient_ids: np.ndarray, 
+                              thresholds: np.ndarray, n_iterations: int = 1000) -> dict:
+    """
+    Realiza un bootstrap estratificado por paciente sobre predicciones fijas 
+    para obtener intervalos de confianza del 95%.
+    """
+    unique_patients = np.unique(patient_ids)
+    n_patients = len(unique_patients)
+    
+    f1_scores = []
+    auc_scores = []
+    
+    # Pre-calcular los índices de cada paciente para acelerar el ciclo
+    patient_to_idx = {p: np.where(patient_ids == p)[0] for p in unique_patients}
+    
+    for _ in range(n_iterations):
+        # 1. Remuestreo aleatorio CON reemplazo de pacientes (no de registros)
+        boot_patients = np.random.choice(unique_patients, size=n_patients, replace=True)
+        
+        # 2. Reconstruir los índices basados en los pacientes elegidos
+        boot_indices = np.concatenate([patient_to_idx[p] for p in boot_patients])
+        
+        # 3. Filtrar las etiquetas y probabilidades usando el remuestreo
+        y_true_boot = y_true[boot_indices]
+        y_probs_boot = y_pred_probs[boot_indices]
+        y_pred_boot = (y_probs_boot >= thresholds).astype(int)
+        
+        # 4. Calcular métricas (ignorando si en una muestra muy rara falta una clase)
+        try:
+            f1 = f1_score(y_true_boot, y_pred_boot, average="macro", zero_division=0)
+            auc = roc_auc_score(y_true_boot, y_probs_boot, average="macro")
+            f1_scores.append(f1)
+            auc_scores.append(auc)
+        except ValueError:
+            continue
+            
+    # Extraer media e intervalos de confianza (percentiles 2.5 y 97.5)
+    return {
+        "f1_mean": float(np.mean(f1_scores)),
+        "f1_ci": [float(x) for x in np.percentile(f1_scores, [2.5, 97.5])],
+        "auc_mean": float(np.mean(auc_scores)),
+        "auc_ci": [float(x) for x in np.percentile(auc_scores, [2.5, 97.5])]
+    }
+#EJMO-Fin

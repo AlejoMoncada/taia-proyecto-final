@@ -96,6 +96,14 @@ En privacidad, los datos están desidentificados y son públicos bajo CC BY 4.0.
 
 Las mitigaciones hechas hasta ahora son las métricas por clase y las matrices de confusión por clase de la línea base. Quedan planeados, pero no hechos, un reporte de desempeño por sexo y grupo de edad, y un análisis por sitio y por equipo.
 
+Con base en los primeros resultados experimentales que demostraron debilidades en la calibración probabilística (ECE) y el rendimiento en la clase sub-representada HYP, el plan de evaluación se actualizó para incorporar técnicas avanzadas de Deep Learning:
+
+ * En la función de pérdida: Transición de Binary Cross Entropy (BCE) a Focal Loss para equilibrar la penalización asimétrica de clases mayoritarias.
+
+ * En la estimación de confianza: Adopción de Temperature Scaling ajustado en validación, asegurando que las probabilidades emitidas por el modelo sean interpretables para futuros sistemas de triaje médico.
+
+ * En la validación estadística: Abandono de la simple desviación estándar por semillas en favor de un Bootstrap Pareado a Nivel de Paciente. Esto blinda el experimento contra la dependencia de registros (fuga poblacional) y permite reportar intervalos de confianza del 95% alineados con los estándares de investigación médica de PhysioNet.
+
 ## 8. Arquitectura del código y reproducibilidad
 
 El código está en `src/ecg/`: `data.py` (descarga, etiquetas y partición), `features.py` (extracción de features), `baseline.py` (línea base), `metrics.py` (métricas y calibración), `search.py` y `tune_xgb.py` (búsqueda), `models.py` y `deep.py` (redes y su entrenamiento). La configuración vive en `configs/default.yaml`. Las pruebas están en `tests/` y los resultados en `outputs/`.
