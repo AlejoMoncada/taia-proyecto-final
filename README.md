@@ -41,6 +41,9 @@ uv run python -m ecg.baseline             # línea base clásica (features + RF 
 uv run python -m ecg.tune_xgb             # búsqueda de XGBoost en val + 3 semillas
 uv run python -m ecg.deep search --model cnn1d     # búsqueda de la CNN 1D (igual con cnn_lstm)
 uv run python -m ecg.deep final --model cnn1d      # mejor configuración con 3 semillas
+uv run python -m ecg.deep search --model cnn_lstm  # búsqueda de la CNN+LSTM
+uv run python -m ecg.deep final --model cnn_lstm   # mejor configuración con 3 semillas
+uv run python -m ecg.bootstrap            # Cálculo de rigor estadístico (Incertidumbre poblacional)
 uv run python -m ecg.compare              # tabla y figuras comparativas en outputs/comparison/
 uv run pytest                             # pruebas
 ```
