@@ -59,6 +59,7 @@ src/ecg/      código: datos, features, métricas, modelos
 tests/        pruebas (split sin fuga, features, métricas, redes, comparación)
 docs/         plan, ficha de datos y ficha del modelo
 notebooks/    exploración
+video/        proyecto del video de sustentación (escenas HTML, locución y render)
 outputs/      resultados de cada corrida (métricas, figuras, modelos)
 ```
 
@@ -136,7 +137,7 @@ diagrama de confiabilidad), tiempo de entrenamiento e inferencia. Los resultados
 ## Paquete de entrega local
 
 Los borradores están en [output/pdf/](output/pdf/): [plan](output/pdf/plan.pdf) (5 páginas),
-[ejecución](output/pdf/ejecucion.pdf) (6), [informe](output/pdf/informe.pdf) (10) y
+[ejecución](output/pdf/ejecucion.pdf) (7), [informe](output/pdf/informe.pdf) (11) y
 [diapositivas](output/pdf/diapositivas.pdf) (10). [Guía de ensayo](docs/guia_sustentacion.md).
 Faltan confirmación del grupo, autores, roles, cronograma, declaración final de IA y fecha de Moodle.
 Se comparten como borradores de revisión, no como una entrega aprobada para subir a Moodle.
@@ -144,18 +145,40 @@ Los análisis por subgrupos, bootstrap y recalibración siguen pendientes.
 
 Las fuentes editables son `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md`.
 `docs/evidence/` conserva tablas, figuras y hashes de la evidencia existente, sin datos individuales ni pesos.
-El generador no entrena ni consulta test: usa ese snapshot. En un entorno separado con `reportlab` y `pypdf`:
+El generador no entrena ni consulta test: usa ese snapshot.
 
 ```bash
-python scripts/build_delivery.py          # genera los cuatro PDF
-python scripts/build_delivery.py --check  # comprueba hashes, texto y límites de páginas sin escribir
-python -m unittest discover -s tests -p test_delivery.py -v
+uv run python scripts/build_delivery.py          # genera los cuatro PDF
+uv run python scripts/build_delivery.py --check  # comprueba hashes, texto y límites de páginas sin escribir
+uv run python -m unittest discover -s tests -p test_delivery.py -v
 ```
 
-Las herramientas PDF no se agregaron al entorno de entrenamiento. Si no están instaladas, las tres pruebas
-PDF se omiten en `uv run pytest`; deben ejecutarse aparte con el comando anterior. La prueba de atributos
-Git sí puede ejecutarse sin esas herramientas; `.gitattributes` conserva PDF y PNG como archivos binarios.
+`reportlab` y `pypdf` están en las dependencias del proyecto, así que el generador y sus pruebas corren en el
+mismo entorno de `uv`. La prueba de atributos Git no necesita esas herramientas; `.gitattributes` conserva
+PDF, PNG, MP4 y WAV como archivos binarios.
 Los pesos siguen fuera de git: reproducir el entrenamiento o acordar un canal autorizado para compartirlos.
+
+## Video de sustentación
+
+Video de 1:25 que acompaña la sustentación: recorre el problema, el diseño de la comparación, la partición
+por paciente y los resultados. La narración está en español y la locución se generó con TTS; los números que
+menciona la voz son los de la tabla comparativa de arriba.
+
+[![Fotograma del video](video/renders/verificacion-40s.png)](video/renders/sustentacion.mp4)
+
+[Abrir el video](video/renders/sustentacion.mp4) (MP4, 1920×1080, 30 fps, 13,7 MB).
+
+El proyecto está en `video/`: las seis escenas son composiciones HTML (`video/compositions/s1.html` a
+`s6.html`) sobre una composición raíz (`video/index.html`), renderizadas con HyperFrames. `video/SPEC.md`
+documenta las decisiones de diseño y `video/REVIEW.md` la revisión previa al render. Los seis bloques de
+locución están en `video/assets/`. Para volver a renderizar:
+
+```bash
+cd video
+npm install
+npm run check     # lint, layout, contraste y movimiento
+npm run render    # escribe el MP4 en video/renders/
+```
 
 ## Reproducibilidad
 

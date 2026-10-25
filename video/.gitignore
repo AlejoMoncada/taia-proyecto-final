@@ -1,0 +1,4 @@
+# Dependencias y caché del CLI de HyperFrames; se regeneran solas
+node_modules/
+.hyperframes/
+.waveform-cache/

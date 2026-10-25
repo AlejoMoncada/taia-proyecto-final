@@ -1,0 +1,116 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background-color: #f7ece8;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px);
+    }
+    #escena {
+      position: absolute;
+      inset: 0;
+    }
+    #s6-marca {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 430px;
+      text-align: center;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 150px;
+      letter-spacing: -0.02em;
+      color: #1c1714;
+      opacity: 0;
+    }
+    #s6-sub {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 640px;
+      text-align: center;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 44px;
+      color: #1c1714;
+    }
+    #s6-footer {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 80px;
+      text-align: center;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 34px;
+      color: #1c1714;
+    }
+  </style>
+  <div data-hf-id="hf-7obi" id="root" data-composition-id="s6" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-siqm" id="escena">
+      <svg data-hf-id="hf-tzyv"
+        id="s6-svg"
+        width="1920"
+        height="1080"
+        viewBox="0 0 1920 1080"
+        fill="none"
+        style="position: absolute; inset: 0"
+        data-layout-allow-overflow
+      >
+        <path data-hf-id="hf-p4l9"
+          id="s6-trazo"
+          d="M-20 300 H300 Q360 230 420 300 H580 L620 332 L670 60 L720 510 L770 300 H900 Q1000 248 1100 300 H1940"
+          pathLength="1"
+          transform="translate(0 130)"
+          stroke="#c1272d"
+          stroke-width="7"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          stroke-dasharray="1"
+          stroke-dashoffset="1"
+        />
+      </svg>
+      <div data-hf-id="hf-3klv" id="s6-marca-clip" class="clip" data-start="7.7" data-duration="7.3">
+        <span data-hf-id="hf-45xa" id="s6-marca">Reproducible</span>
+      </div>
+      <div data-hf-id="hf-gmkt" id="s6-sub-clip" class="clip" data-start="9.2" data-duration="5.8">
+        <span data-hf-id="hf-t6b8" id="s6-sub">código · semillas · configuraciones</span>
+      </div>
+      <div data-hf-id="hf-zhoh" id="s6-footer-clip" class="clip" data-start="10.6" data-duration="4.4">
+        <span data-hf-id="hf-wlj5" id="s6-footer">TAIA · Grupo 9</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#escena", { scale: 1.03 }, { scale: 1, duration: 14.5, ease: "none" }, 0);
+    tl.fromTo(
+      "#s6-trazo",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 3.4, ease: "power1.inOut" },
+      0.6,
+    );
+    tl.fromTo("#s6-trazo", { opacity: 1 }, { opacity: 0.18, duration: 0.6, ease: "power2.out" }, 5);
+    tl.fromTo(
+      "#s6-marca",
+      { scale: 1.15, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.5, ease: "power4.out" },
+      7.7,
+    );
+    tl.fromTo(
+      "#s6-sub",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power3.inOut" },
+      9.2,
+    );
+    tl.fromTo("#s6-footer", { opacity: 0 }, { opacity: 0.75, duration: 0.5 }, 10.6);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["s6"] = tl;
+  </script>
+</template>

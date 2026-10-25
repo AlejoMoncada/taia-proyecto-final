@@ -1,3 +1,7 @@
 # Preserve document and figure bytes across platforms and inherited diff drivers.
 *.pdf binary
 *.png binary
+
+# Video y audio del video de sustentacion: sin conversion de texto ni diff de linea
+*.mp4 binary
+*.wav binary

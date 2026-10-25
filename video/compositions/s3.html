@@ -1,0 +1,215 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background-color: #f7ece8;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px);
+    }
+    #escena {
+      position: absolute;
+      inset: 0;
+    }
+    .marco {
+      position: absolute;
+      inset: 0;
+    }
+    #s3-raiz {
+      position: absolute;
+      left: 660px;
+      top: 110px;
+      width: 600px;
+      height: 150px;
+      border: 4px solid #1c1714;
+      border-radius: 18px;
+      background: #f7ece8;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 0 36px;
+    }
+    #s3-raiz span {
+      font-family: "Archivo Black", sans-serif;
+      font-size: 46px;
+      color: #1c1714;
+    }
+    .s3-sub {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100px;
+      text-align: center;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 34px;
+      color: #1c1714;
+      opacity: 0;
+    }
+    .s3-rama {
+      position: absolute;
+      width: 640px;
+      text-align: center;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 54px;
+      color: #1c1714;
+    }
+    .s3-chip {
+      position: absolute;
+      width: 560px;
+      height: 88px;
+      border: 3px solid #1c1714;
+      border-radius: 14px;
+      background: #f7ece8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 40px;
+      color: #1c1714;
+    }
+    #s3-path-l {
+      stroke: #1c1714;
+      stroke-width: 5;
+    }
+    #s3-path-r {
+      stroke: #1c1714;
+      stroke-width: 5;
+    }
+  </style>
+  <div data-hf-id="hf-3xc5" id="root" data-composition-id="s3" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-siqm" id="escena">
+      <div data-hf-id="hf-2cfy" class="marco">
+        <svg data-hf-id="hf-xtd7"
+          id="s3-svg"
+          width="1920"
+          height="1080"
+          viewBox="0 0 1920 1080"
+          fill="none"
+          style="position: absolute; inset: 0"
+        >
+          <path data-hf-id="hf-eeaz"
+            id="s3-path-l"
+            d="M900 268 C 760 340, 560 360, 490 450"
+            pathLength="1"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+          <path data-hf-id="hf-ge7a"
+            id="s3-path-r"
+            d="M1020 268 C 1160 340, 1360 360, 1430 450"
+            pathLength="1"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+        </svg>
+      </div>
+      <div data-hf-id="hf-r8pp" id="s3-sub-clip" class="clip" data-start="1.8" data-duration="16.5">
+        <span data-hf-id="hf-q6f7" class="s3-sub">mismas particiones · mismo presupuesto · mismas métricas</span>
+      </div>
+      <div data-hf-id="hf-uvgg" id="s3-raiz" class="clip" data-start="0.4" data-duration="17.9">
+        <svg data-hf-id="hf-877c" width="120" height="64" viewBox="0 0 360 240" fill="none">
+          <path data-hf-id="hf-0j0a"
+            id="s3-glyph"
+            d="M0 130 H40 Q55 100 70 130 H100 L108 146 L122 62 L136 196 L150 130 H180 Q205 110 230 130 H360"
+            pathLength="1"
+            stroke="#c1272d"
+            stroke-width="8"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+        </svg>
+        <span data-hf-id="hf-1dnw">misma señal</span>
+      </div>
+      <div data-hf-id="hf-6n5k" id="s3-lbl-l-clip" class="clip" data-start="5.4" data-duration="12.9">
+        <span data-hf-id="hf-zprj" class="s3-rama" style="left: 170px; top: 460px">línea clásica</span>
+      </div>
+      <div data-hf-id="hf-yvcg" id="s3-chip-l1" class="clip" data-start="6.6" data-duration="11.7">
+        <div data-hf-id="hf-zmgb" class="s3-chip" style="left: 210px; top: 580px">features a mano</div>
+      </div>
+      <div data-hf-id="hf-i7go" id="s3-chip-l2" class="clip" data-start="8.2" data-duration="10.1">
+        <div data-hf-id="hf-1znd" class="s3-chip" style="left: 210px; top: 690px">bosques aleatorios</div>
+      </div>
+      <div data-hf-id="hf-0mm2" id="s3-chip-l3" class="clip" data-start="9.2" data-duration="9.1">
+        <div data-hf-id="hf-ep95" class="s3-chip" style="left: 210px; top: 800px">XGBoost</div>
+      </div>
+      <div data-hf-id="hf-cxty" id="s3-lbl-r-clip" class="clip" data-start="11.4" data-duration="6.9">
+        <span data-hf-id="hf-jav2" class="s3-rama" style="left: 1110px; top: 460px">redes neuronales</span>
+      </div>
+      <div data-hf-id="hf-betc" id="s3-chip-r1" class="clip" data-start="12.4" data-duration="5.9">
+        <div data-hf-id="hf-d74n" class="s3-chip" style="left: 1150px; top: 580px">señal cruda</div>
+      </div>
+      <div data-hf-id="hf-ekkf" id="s3-chip-r2" class="clip" data-start="13.6" data-duration="4.7">
+        <div data-hf-id="hf-a9m8" class="s3-chip" style="left: 1150px; top: 690px">CNN 1D</div>
+      </div>
+      <div data-hf-id="hf-h9eq" id="s3-chip-r3" class="clip" data-start="14.8" data-duration="3.5">
+        <div data-hf-id="hf-5pst" class="s3-chip" style="left: 1150px; top: 800px">CNN + LSTM</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#escena", { scale: 1.05 }, { scale: 1, duration: 18, ease: "none" }, 0);
+    tl.fromTo(
+      "#s3-raiz",
+      { scale: 1.12, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.5, ease: "power4.out" },
+      0.4,
+    );
+    tl.fromTo(
+      "#s3-glyph",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" },
+      0.7,
+    );
+    tl.fromTo(".s3-sub", { opacity: 0 }, { opacity: 0.7, duration: 0.5 }, 1.8);
+    tl.fromTo(
+      "#s3-path-l",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" },
+      4.8,
+    );
+    tl.fromTo(
+      "#s3-lbl-l-clip .s3-rama",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power3.inOut" },
+      5.4,
+    );
+    [["#s3-chip-l1", 6.6], ["#s3-chip-l2", 8.2], ["#s3-chip-l3", 9.2]].forEach(([id, at]) => {
+      tl.fromTo(
+        `${id} .s3-chip`,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power3.inOut" },
+        at,
+      );
+    });
+    tl.fromTo(
+      "#s3-path-r",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" },
+      10.8,
+    );
+    tl.fromTo(
+      "#s3-lbl-r-clip .s3-rama",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power3.inOut" },
+      11.4,
+    );
+    [["#s3-chip-r1", 12.4], ["#s3-chip-r2", 13.6], ["#s3-chip-r3", 14.8]].forEach(([id, at]) => {
+      tl.fromTo(
+        `${id} .s3-chip`,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power3.inOut" },
+        at,
+      );
+    });
+    window.__timelines = window.__timelines || {};
+    window.__timelines["s3"] = tl;
+  </script>
+</template>

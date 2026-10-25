@@ -1,0 +1,149 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background-color: #f7ece8;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px);
+    }
+    #escena {
+      position: absolute;
+      inset: 0;
+    }
+    .ficha {
+      position: absolute;
+      width: 170px;
+      height: 150px;
+      border: 3px solid #1c1714;
+      border-radius: 14px;
+      background: #f7ece8;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 24px;
+    }
+    .ficha i {
+      display: block;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #1c1714;
+      opacity: 0.85;
+    }
+    .barrera {
+      position: absolute;
+      top: 240px;
+      width: 7px;
+      height: 560px;
+      background: #1c1714;
+      transform-origin: top;
+    }
+    .zona {
+      position: absolute;
+      top: 850px;
+      width: 400px;
+      text-align: center;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 40px;
+      color: #1c1714;
+      opacity: 0;
+    }
+    #s4-cap {
+      display: block;
+      position: absolute;
+      left: 120px;
+      bottom: 90px;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 56px;
+      color: #1c1714;
+    }
+    #s4-sello {
+      position: absolute;
+      left: 1400px;
+      top: 400px;
+      width: 380px;
+      height: 110px;
+      border: 5px solid #c1272d;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 52px;
+      color: #c1272d;
+      transform: rotate(-7deg);
+    }
+  </style>
+  <div data-hf-id="hf-2tvg" id="root" data-composition-id="s4" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-siqm" id="escena">
+      <div data-hf-id="hf-p8hs" id="s4-f1" class="ficha" style="left: 110px; top: 300px"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i><i data-hf-id="hf-ylp6"></i></div>
+      <div data-hf-id="hf-hnq7" id="s4-f2" class="ficha" style="left: 330px; top: 300px"><i data-hf-id="hf-0l8b"></i><i data-hf-id="hf-0zjc"></i><i data-hf-id="hf-zsm9"></i><i data-hf-id="hf-06xa"></i></div>
+      <div data-hf-id="hf-vxka" id="s4-f3" class="ficha" style="left: 550px; top: 300px"><i data-hf-id="hf-26gf"></i><i data-hf-id="hf-2krg"></i><i data-hf-id="hf-oz7w"></i><i data-hf-id="hf-okwv"></i></div>
+      <div data-hf-id="hf-yxo1" id="s4-f4" class="ficha" style="left: 770px; top: 300px"><i data-hf-id="hf-o6lu"></i><i data-hf-id="hf-jqbp"></i><i data-hf-id="hf-qkg0"></i><i data-hf-id="hf-q64z"></i></div>
+      <div data-hf-id="hf-d252" id="s4-f5" class="ficha" style="left: 110px; top: 540px"><i data-hf-id="hf-prty"></i><i data-hf-id="hf-pdix"></i><i data-hf-id="hf-hqsk"></i><i data-hf-id="hf-hchj"></i></div>
+      <div data-hf-id="hf-0mkx" id="s4-f6" class="ficha" style="left: 330px; top: 540px"><i data-hf-id="hf-8d0n"></i><i data-hf-id="hf-8rbo"></i><i data-hf-id="hf-7kel"></i><i data-hf-id="hf-7ypm"></i></div>
+      <div data-hf-id="hf-ncis" id="s4-f7" class="ficha" style="left: 550px; top: 540px"><i data-hf-id="hf-9y8r"></i><i data-hf-id="hf-acjs"></i><i data-hf-id="hf-95mp"></i><i data-hf-id="hf-9jxq"></i></div>
+      <div data-hf-id="hf-x7hz" id="s4-f8" class="ficha" style="left: 770px; top: 540px"><i data-hf-id="hf-bjgv"></i><i data-hf-id="hf-bxrw"></i><i data-hf-id="hf-7lcu"></i><i data-hf-id="hf-771t"></i></div>
+      <div data-hf-id="hf-8imr" id="s4-f9" class="ficha" style="left: 1150px; top: 540px"><i data-hf-id="hf-8dyw"></i><i data-hf-id="hf-7znv"></i><i data-hf-id="hf-604q"></i><i data-hf-id="hf-5ltp"></i></div>
+      <div data-hf-id="hf-pj3w" id="s4-f10" class="ficha" style="left: 1500px; top: 540px"><i data-hf-id="hf-6sqs"></i><i data-hf-id="hf-6efr"></i><i data-hf-id="hf-art2"></i><i data-hf-id="hf-adi1"></i></div>
+      <div data-hf-id="hf-bw0y" id="s4-b1" class="barrera" style="left: 1042px"></div>
+      <div data-hf-id="hf-xdmp" id="s4-b2" class="barrera" style="left: 1408px"></div>
+      <div data-hf-id="hf-senp" id="s4-z1" class="zona" style="left: 330px">train · folds 1-8</div>
+      <div data-hf-id="hf-1sr5" id="s4-z2" class="zona" style="left: 1035px">val · 9</div>
+      <div data-hf-id="hf-gdsr" id="s4-z3" class="zona" style="left: 1400px">test · 10</div>
+      <div data-hf-id="hf-p4o5" id="s4-sello-clip" class="clip" data-start="9" data-duration="2.91">
+        <div data-hf-id="hf-iftd" id="s4-sello">A CIEGAS</div>
+      </div>
+      <div data-hf-id="hf-beaq" id="s4-cap-clip" class="clip" data-start="8.2" data-duration="3.6">
+        <span data-hf-id="hf-3yw3" id="s4-cap">1 paciente, 1 conjunto</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#escena", { scale: 1.05 }, { scale: 1, duration: 11.4, ease: "none" }, 0);
+    tl.fromTo(
+      ".ficha",
+      { opacity: 0, scale: 0.85 },
+      { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out", stagger: 0.07 },
+      0.3,
+    );
+    tl.fromTo(
+      "#s4-b1",
+      { scaleY: 0 },
+      { scaleY: 1, duration: 0.45, ease: "power3.inOut" },
+      4.3,
+    );
+    tl.fromTo(
+      "#s4-b2",
+      { scaleY: 0 },
+      { scaleY: 1, duration: 0.45, ease: "power3.inOut" },
+      4.5,
+    );
+    tl.fromTo("#s4-z1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.9);
+    tl.fromTo("#s4-z2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 5.1);
+    tl.fromTo("#s4-z3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 5.3);
+    // una ficha intenta cruzar a la zona de val y rebota
+    tl.fromTo("#s4-f4", { x: 0 }, { x: 380, duration: 0.7, ease: "power2.in" }, 6.4);
+    tl.fromTo("#s4-f4", { x: 380 }, { x: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, 7.1);
+    tl.fromTo(
+      "#s4-cap",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power3.inOut" },
+      8.2,
+    );
+    tl.fromTo(
+      "#s4-sello",
+      { scale: 1.5, opacity: 0 },
+      { scale: 1, opacity: 0.95, duration: 0.4, ease: "power4.out" },
+      9,
+    );
+    window.__timelines = window.__timelines || {};
+    window.__timelines["s4"] = tl;
+  </script>
+</template>

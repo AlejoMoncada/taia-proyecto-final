@@ -1,0 +1,161 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background-color: #f7ece8;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px);
+    }
+    #escena {
+      position: absolute;
+      inset: 0;
+    }
+    .marco {
+      position: absolute;
+      inset: 0;
+    }
+    #s2-q {
+      display: block;
+      position: absolute;
+      left: 120px;
+      top: 120px;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 96px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #1c1714;
+    }
+    #s2-num {
+      display: block;
+      position: absolute;
+      right: 120px;
+      top: 120px;
+      text-align: right;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 120px;
+      line-height: 1;
+      color: #c1272d;
+    }
+    #s2-num-sub {
+      display: block;
+      position: absolute;
+      right: 124px;
+      top: 268px;
+      text-align: right;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 36px;
+      color: #1c1714;
+    }
+    .s2-clase {
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      font-size: 38px;
+      fill: #1c1714;
+      opacity: 0;
+    }
+  </style>
+  <div data-hf-id="hf-u16y" id="root" data-composition-id="s2" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-siqm" id="escena">
+      <div data-hf-id="hf-2cfy" class="marco">
+        <svg data-hf-id="hf-5f5q" id="s2-svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none"></svg>
+      </div>
+      <div data-hf-id="hf-7if9" id="s2-q-clip" class="clip" data-start="0.3" data-duration="14.49">
+        <span data-hf-id="hf-9ce3" id="s2-q">¿Puede un modelo<br data-hf-id="hf-x5px" />leer ese registro?</span>
+      </div>
+      <div data-hf-id="hf-zfai" id="s2-num-clip" class="clip" data-start="11.6" data-duration="3.19">
+        <span data-hf-id="hf-20ob" id="s2-num">21.837</span>
+      </div>
+      <div data-hf-id="hf-5p0p" id="s2-numsub-clip" class="clip" data-start="11.9" data-duration="2.89">
+        <span data-hf-id="hf-tgcq" id="s2-num-sub">estudios · PTB XL</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.getElementById("s2-svg");
+    const CENTROS = [
+      { x: 250, y: 740 },
+      { x: 625, y: 740 },
+      { x: 1000, y: 740 },
+      { x: 1375, y: 740 },
+      { x: 1700, y: 740 },
+    ];
+    const N = 120;
+    const ini = [];
+    const fin = [];
+    for (let i = 0; i < N; i++) {
+      ini.push({ x: 90 + ((i * 971) % 1740), y: 470 + ((i * 613) % 480) });
+      const c = CENTROS[i % 5];
+      const j = Math.floor(i / 5);
+      const anillo = Math.floor(j / 6);
+      const ang = (j % 6) * 1.047 + anillo * 0.55;
+      const r = 26 + anillo * 34;
+      fin.push({ x: c.x + Math.cos(ang) * r, y: c.y + Math.sin(ang) * r * 0.8 });
+      const dot = document.createElementNS(NS, "circle");
+      dot.setAttribute("class", "s2-dot");
+      dot.setAttribute("cx", ini[i].x);
+      dot.setAttribute("cy", ini[i].y);
+      dot.setAttribute("r", "8");
+      dot.setAttribute("fill", "#1c1714");
+      dot.setAttribute("opacity", "0");
+      svg.appendChild(dot);
+    }
+    // etiquetas de las 5 clases bajo los grupos
+    const CLASES = ["NORM", "MI", "STTC", "CD", "HYP"];
+    CLASES.forEach((cl, i) => {
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("class", "s2-clase");
+      t.setAttribute("x", CENTROS[i].x);
+      t.setAttribute("y", 850);
+      t.setAttribute("text-anchor", "middle");
+      t.textContent = cl;
+      svg.appendChild(t);
+    });
+
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#escena", { scale: 1.05 }, { scale: 1, duration: 14.2, ease: "none" }, 0);
+    tl.fromTo(
+      "#s2-q",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.8, ease: "power3.inOut" },
+      0.5,
+    );
+    tl.fromTo(
+      ".s2-dot",
+      { opacity: 0 },
+      { opacity: 0.85, duration: 0.3, stagger: 0.012 },
+      3.8,
+    );
+    tl.fromTo(
+      ".s2-dot",
+      { attr: { cx: (i) => ini[i].x, cy: (i) => ini[i].y } },
+      {
+        attr: { cx: (i) => fin[i].x, cy: (i) => fin[i].y },
+        duration: 2.6,
+        ease: "power2.inOut",
+        stagger: 0.012,
+      },
+      5.0,
+    );
+    tl.fromTo(".s2-clase", { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.16 }, 7.8);
+    tl.fromTo(
+      "#s2-num",
+      { scale: 1.2, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.45, ease: "power4.out" },
+      11.6,
+    );
+    tl.fromTo(
+      "#s2-num-sub",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power3.inOut" },
+      11.9,
+    );
+    window.__timelines = window.__timelines || {};
+    window.__timelines["s2"] = tl;
+  </script>
+</template>

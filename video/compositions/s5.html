@@ -1,0 +1,274 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background-color: #f7ece8;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px);
+    }
+    #escena {
+      position: absolute;
+      inset: 0;
+    }
+    #s5-titulo {
+      position: absolute;
+      left: 120px;
+      top: 110px;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 64px;
+      color: #1c1714;
+      opacity: 0;
+    }
+    .barra {
+      position: absolute;
+      width: 190px;
+      bottom: 200px;
+      transform-origin: bottom;
+    }
+    .barra-nombre {
+      position: absolute;
+      bottom: 140px;
+      width: 190px;
+      text-align: center;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 40px;
+      color: #1c1714;
+      opacity: 0;
+    }
+    .barra-cifra {
+      position: absolute;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 84px;
+      opacity: 0;
+    }
+    #s5-eje-et {
+      position: absolute;
+      left: 120px;
+      bottom: 96px;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 32px;
+      color: #1c1714;
+      opacity: 0;
+    }
+    #s5-por-clase {
+      position: absolute;
+      left: 1100px;
+      top: 170px;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 52px;
+      color: #1c1714;
+      opacity: 0;
+    }
+    .fila {
+      position: absolute;
+      left: 1100px;
+      width: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+    }
+    .fila span {
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 40px;
+      color: #1c1714;
+    }
+    #s5-cap {
+      display: block;
+      position: absolute;
+      left: 1100px;
+      bottom: 90px;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 34px;
+      color: #1c1714;
+    }
+  </style>
+  <div data-hf-id="hf-4473" id="root" data-composition-id="s5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-siqm" id="escena">
+      <div data-hf-id="hf-7idx" id="s5-titulo">las redes ganan</div>
+      <div data-hf-id="hf-1uiy"
+        id="s5-ejes"
+        style="position: absolute; inset: 0"
+        data-layout-allow-overflow
+      >
+        <svg data-hf-id="hf-hgs9"
+          id="s5-svg"
+          width="1920"
+          height="1080"
+          viewBox="0 0 1920 1080"
+          fill="none"
+          style="position: absolute; inset: 0"
+        >
+          <path data-hf-id="hf-mgph"
+            id="s5-eje-v"
+            d="M200 240 V880"
+            pathLength="1"
+            stroke="#1c1714"
+            stroke-width="4"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+          <path data-hf-id="hf-u6um"
+            id="s5-eje-h"
+            d="M200 880 H900"
+            pathLength="1"
+            stroke="#1c1714"
+            stroke-width="4"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+          <path data-hf-id="hf-46ha"
+            id="s5-flecha-mi"
+            d="M1620 400 V300 M1620 300 L1604 320 M1620 300 L1636 320"
+            pathLength="1"
+            stroke="#c1272d"
+            stroke-width="7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+          <path data-hf-id="hf-z3gj"
+            id="s5-flecha-cd"
+            d="M1620 580 V480 M1620 480 L1604 500 M1620 480 L1636 500"
+            pathLength="1"
+            stroke="#c1272d"
+            stroke-width="7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+          <path data-hf-id="hf-4xyn"
+            id="s5-plana-hyp"
+            d="M1580 660 H1660"
+            pathLength="1"
+            stroke="#1c1714"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+        </svg>
+      </div>
+      <div data-hf-id="hf-l8tm" id="s5-barra-xgb" class="barra" style="left: 300px; height: 552px; background: #1c1714"></div>
+      <div data-hf-id="hf-ygcs" id="s5-barra-cnn" class="barra" style="left: 620px; height: 595px; background: #c1272d"></div>
+      <div data-hf-id="hf-12fi" id="s5-nombre-xgb" class="barra-nombre" style="left: 300px">XGBoost</div>
+      <div data-hf-id="hf-9cvj" id="s5-nombre-cnn" class="barra-nombre" style="left: 620px">CNN 1D</div>
+      <div data-hf-id="hf-95s2" id="s5-cifra-xgb-clip" class="clip" data-start="4.3" data-duration="9.7">
+        <span data-hf-id="hf-xvgc" class="barra-cifra" style="left: 290px; top: 240px; color: #1c1714">0,69</span>
+      </div>
+      <div data-hf-id="hf-74mu" id="s5-cifra-cnn-clip" class="clip" data-start="6.6" data-duration="7.4">
+        <span data-hf-id="hf-b5c8" class="barra-cifra" style="left: 610px; top: 196px; color: #c1272d">0,74</span>
+      </div>
+      <div data-hf-id="hf-zfc6" id="s5-eje-et-clip" class="clip" data-start="0.4" data-duration="13.6">
+        <span data-hf-id="hf-7zul" id="s5-eje-et">F1 macro · test</span>
+      </div>
+      <div data-hf-id="hf-oy6g" id="s5-pc-clip" class="clip" data-start="8.6" data-duration="5.4">
+        <span data-hf-id="hf-eyhq" id="s5-por-clase">por clase</span>
+      </div>
+      <div data-hf-id="hf-8to8" id="s5-fila-mi-clip" class="clip" data-start="9.3" data-duration="4.7">
+        <div data-hf-id="hf-yyop" class="fila" style="top: 330px"><span data-hf-id="hf-csp7">MI · infarto</span></div>
+      </div>
+      <div data-hf-id="hf-q2fp" id="s5-fila-cd-clip" class="clip" data-start="10" data-duration="4">
+        <div data-hf-id="hf-mx35" class="fila" style="top: 510px"><span data-hf-id="hf-g4gk">CD · conducción</span></div>
+      </div>
+      <div data-hf-id="hf-lu5m" id="s5-fila-hyp-clip" class="clip" data-start="10.7" data-duration="3.3">
+        <div data-hf-id="hf-2csy" class="fila" style="top: 690px">
+          <span data-hf-id="hf-ou70">HYP · hipertrofia</span>
+          <span data-hf-id="hf-6dx4" style="font-family: 'Archivo Black', sans-serif; font-size: 48px">≈ 0,60</span>
+        </div>
+      </div>
+      <div data-hf-id="hf-0vjm" id="s5-cap-clip" class="clip" data-start="11.5" data-duration="2.5">
+        <span data-hf-id="hf-st0u" id="s5-cap">particiones idénticas para todos · media de 3 semillas</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#escena", { scale: 1.05 }, { scale: 1, duration: 13.6, ease: "none" }, 0);
+    tl.fromTo(
+      "#s5-titulo",
+      { clipPath: "inset(0 100% 0 0)", opacity: 1 },
+      { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.6, ease: "power3.inOut" },
+      0.5,
+    );
+    tl.fromTo(
+      "#s5-eje-v",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" },
+      0.4,
+    );
+    tl.fromTo(
+      "#s5-eje-h",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" },
+      0.6,
+    );
+    tl.fromTo(
+      "#s5-barra-xgb",
+      { scaleY: 0 },
+      { scaleY: 1, duration: 1.8, ease: "power3.inOut" },
+      0.7,
+    );
+    tl.fromTo(
+      "#s5-barra-cnn",
+      { scaleY: 0 },
+      { scaleY: 1, duration: 1.8, ease: "power3.inOut" },
+      0.9,
+    );
+    tl.fromTo("#s5-nombre-xgb", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 2.6);
+    tl.fromTo("#s5-nombre-cnn", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 2.8);
+    tl.fromTo("#s5-eje-et", { opacity: 0 }, { opacity: 0.7, duration: 0.5 }, 0.9);
+    tl.fromTo(
+      "#s5-cifra-xgb-clip .barra-cifra",
+      { scale: 1.2, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.4, ease: "power4.out" },
+      4.3,
+    );
+    tl.fromTo(
+      "#s5-cifra-cnn-clip .barra-cifra",
+      { scale: 1.2, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.4, ease: "power4.out" },
+      6.6,
+    );
+    tl.fromTo("#s5-por-clase", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 8.6);
+    tl.fromTo("#s5-fila-mi-clip .fila", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 9.3);
+    tl.fromTo(
+      "#s5-flecha-mi",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+      9.5,
+    );
+    tl.fromTo("#s5-fila-cd-clip .fila", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 10);
+    tl.fromTo(
+      "#s5-flecha-cd",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+      10.2,
+    );
+    tl.fromTo("#s5-fila-hyp-clip .fila", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 10.7);
+    tl.fromTo(
+      "#s5-plana-hyp",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" },
+      10.9,
+    );
+    tl.fromTo(
+      "#s5-cap",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power3.inOut" },
+      11.5,
+    );
+    window.__timelines = window.__timelines || {};
+    window.__timelines["s5"] = tl;
+  </script>
+</template>

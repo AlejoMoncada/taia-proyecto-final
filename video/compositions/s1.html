@@ -1,0 +1,163 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background-color: #f7ece8;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.13) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(90deg, rgba(193, 39, 45, 0.28) 0 2px, transparent 2px 120px);
+    }
+    #escena {
+      position: absolute;
+      inset: 0;
+    }
+    .marco {
+      position: absolute;
+      inset: 0;
+    }
+    #s1-palabra {
+      display: block;
+      position: absolute;
+      left: 120px;
+      bottom: 100px;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 108px;
+      letter-spacing: -0.02em;
+      color: #1c1714;
+    }
+    #s1-cap {
+      display: block;
+      position: absolute;
+      left: 124px;
+      bottom: 96px;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 44px;
+      color: #c1272d;
+    }
+  </style>
+  <div data-hf-id="hf-3pu3" id="root" data-composition-id="s1" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-siqm" id="escena">
+      <div data-hf-id="hf-2cfy" class="marco">
+        <svg data-hf-id="hf-yivk"
+          id="s1-svg"
+          width="1920"
+          height="1080"
+          viewBox="0 0 1920 1080"
+          fill="none"
+          data-layout-allow-overflow
+        >
+          <path data-hf-id="hf-5pq3"
+            id="s1-trazo"
+            d="M-20 420 H300 Q360 350 420 420 H580 L620 452 L670 170 L720 640 L770 420 H900 Q1000 368 1100 420 H1940"
+            pathLength="1"
+            stroke="#c1272d"
+            stroke-width="7"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+          <g data-hf-id="hf-7jqv" id="s1-doce"></g>
+        </svg>
+      </div>
+      <div data-hf-id="hf-i3m2" id="s1-palabra-clip" class="clip" data-start="0.2" data-duration="10.6">
+        <span data-hf-id="hf-3kw0" id="s1-palabra">electrocardiograma</span>
+      </div>
+      <div data-hf-id="hf-3a8v" id="s1-cap-clip" class="clip" data-start="9" data-duration="2">
+        <span data-hf-id="hf-ml39" id="s1-cap">misma señal · doce ángulos</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 12 celdas de derivaciones, construidas de forma determinista.
+    const TRACE =
+      "M0 130 H40 Q55 100 70 130 H100 L108 146 L122 62 L136 196 L150 130 H180 Q205 110 230 130 H360";
+    const LEADS = ["I", "II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"];
+    const doce = document.getElementById("s1-doce");
+    const NS = "http://www.w3.org/2000/svg";
+    LEADS.forEach((lead, i) => {
+      const col = i % 4;
+      const row = Math.floor(i / 4);
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("transform", `translate(${150 + col * 425} ${110 + row * 280})`);
+      const lbl = document.createElementNS(NS, "text");
+      lbl.setAttribute("x", 8);
+      lbl.setAttribute("y", 26);
+      lbl.setAttribute("class", "s1-lbl");
+      lbl.setAttribute("opacity", "0");
+      lbl.setAttribute("font-family", "Outfit, sans-serif");
+      lbl.setAttribute("font-weight", "700");
+      lbl.setAttribute("font-size", "30");
+      lbl.setAttribute("fill", "#1c1714");
+      lbl.textContent = lead;
+      g.appendChild(lbl);
+      const inner = document.createElementNS(NS, "g");
+      inner.setAttribute("transform", "translate(20 32) scale(0.9)");
+      const p = document.createElementNS(NS, "path");
+      p.setAttribute("d", TRACE);
+      p.setAttribute("class", "s1-mini");
+      p.setAttribute("pathLength", "1");
+      p.setAttribute("stroke", "#c1272d");
+      p.setAttribute("stroke-width", "3.4");
+      p.setAttribute("stroke-linejoin", "round");
+      p.setAttribute("stroke-linecap", "round");
+      p.setAttribute("fill", "none");
+      p.setAttribute("stroke-dasharray", "1");
+      p.setAttribute("stroke-dashoffset", "1");
+      inner.appendChild(p);
+      g.appendChild(inner);
+      doce.appendChild(g);
+    });
+
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#escena", { scale: 1.05 }, { scale: 1, duration: 10.6, ease: "none" }, 0);
+    tl.fromTo(
+      "#s1-trazo",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 4.6, ease: "power1.inOut" },
+      0.6,
+    );
+    tl.fromTo(
+      "#s1-palabra",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power3.inOut" },
+      0.7,
+    );
+    tl.fromTo(
+      "#s1-trazo",
+      { opacity: 1 },
+      { opacity: 0.15, duration: 0.5, ease: "power2.out" },
+      6.2,
+    );
+    tl.fromTo(
+      "#s1-palabra",
+      { clipPath: "inset(0 0% 0 0)" },
+      { clipPath: "inset(0 0 0 100%)", duration: 0.5, ease: "power3.inOut", immediateRender: false },
+      6.4,
+    );
+    tl.fromTo(
+      ".s1-mini",
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, duration: 0.55, ease: "power2.out", stagger: 0.09 },
+      6.6,
+    );
+    tl.fromTo(
+      ".s1-lbl",
+      { opacity: 0 },
+      { opacity: 0.75, duration: 0.3, stagger: 0.09 },
+      6.7,
+    );
+    tl.fromTo(
+      "#s1-cap",
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power3.inOut" },
+      9,
+    );
+    window.__timelines = window.__timelines || {};
+    window.__timelines["s1"] = tl;
+  </script>
+</template>
