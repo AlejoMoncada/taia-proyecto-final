@@ -22,7 +22,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import CondPageBreak, Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -61,7 +61,7 @@ def markup(text):
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
 
 
-def render(source, target, slides=False):
+def render(source, target, slides=False, keep=260):
     size = (960, 540) if slides else A4
     width = size[0] - 84
     regular, bold = BRAND_FONTS / "CabinetGrotesk-Regular.ttf", BRAND_FONTS / "CabinetGrotesk-Bold.ttf"
@@ -95,7 +95,8 @@ def render(source, target, slides=False):
     sections = source.strip().split("\n---\n")
     for page, section in enumerate(sections):
         if page:
-            story.append(PageBreak())
+            # A4: a section starts on a new page only when less than `keep` points remain.
+            story.append(PageBreak() if slides else CondPageBreak(keep))
         lines = iter(section.splitlines())
         pending = []
 
@@ -213,7 +214,8 @@ def main():
         OUT.mkdir(parents=True, exist_ok=True)
         report = (DOCS / "informe.md").read_text(encoding="utf-8")
         render((DOCS / "plan.md").read_text(encoding="utf-8"), OUT / "plan.pdf")
-        render(report, OUT / "informe.pdf")
+        # The report keeps more sections on their own page so it stays within 8-12 pages.
+        render(report, OUT / "informe.pdf", keep=420)
         pages = report.strip().split("\n---\n")
         render("\n---\n".join([execution_header() + pages[2]] + [pages[i] for i in [3, 4, 5, 7, 8]]),
                OUT / "ejecucion.pdf")
