@@ -1,6 +1,6 @@
 # Clasificación multietiqueta de ECG con PTB-XL
 ## Resumen y alcance
-Proyecto final TAIA, Grupo 9. Maestría en Inteligencia Artificial, Universidad de La Sabana. Octubre de 2026.
+Proyecto final TAIA, Grupo 9. Maestría en Inteligencia Artificial, Universidad de La Sabana. Octubre de 2026. Integrantes: Edgar Julian Mendez Ortegon, Noel Eduardo Perez Barrios, William Alejandro Moncada Cifuentes.
 
 Comparamos modelos clásicos y redes profundas para identificar cinco superclases diagnósticas en ECG de 12 derivaciones: NORM, MI, STTC, CD e HYP. Un registro puede tener varias etiquetas; no son cinco categorías excluyentes. El objetivo es medir calidad predictiva, calibración y costo con una partición por paciente, no construir un dispositivo médico.
 

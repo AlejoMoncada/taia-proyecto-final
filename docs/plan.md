@@ -2,7 +2,7 @@
 
 Proyecto final TAIA — Grupo 9 — Maestría en IA, Universidad de La Sabana
 
-14 de octubre de 2026. Grupo 9.
+14 de octubre de 2026. Grupo 9: Edgar Julian Mendez Ortegon, Noel Eduardo Perez Barrios, William Alejandro Moncada Cifuentes.
 
 ## 1. Problema y alcance
 

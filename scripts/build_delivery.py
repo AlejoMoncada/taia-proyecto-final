@@ -38,7 +38,7 @@ FILES = {"plan.pdf": (1, 6), "informe.pdf": (8, 12), "ejecucion.pdf": (1, 6), "d
 MODELS = ["random_forest", "xgboost", "xgboost_tuned", "cnn1d", "cnn_lstm"]
 REPO = "github.com/AlejoMoncada/taia-proyecto-final"
 # Nombres completos de los integrantes, tal como deben aparecer en la entrega.
-AUTHORS: list[str] = []
+AUTHORS: list[str] = ['Edgar Julian Mendez Ortegon', 'Noel Eduardo Perez Barrios', 'William Alejandro Moncada Cifuentes']
 
 
 def digest(path):

@@ -189,6 +189,7 @@ def build_html() -> str:
 <h1>¿Una red que lee la señal cruda supera a 210 características hechas a mano?</h1>
 <p class="lede">Clasificación multietiqueta de ECG con PTB-XL</p>
 <div class="cover-trace">{trace_svg(sup["NORM"]["samples"], 10, 1280, 170, stroke=2)}</div>
+<p class="authors">Edgar Julian Mendez Ortegon · Noel Eduardo Perez Barrios · William Alejandro Moncada Cifuentes</p>
 <p class="meta">Grupo 9 · TAIA · Maestría en Inteligencia Artificial · Universidad de La Sabana · Octubre de 2026</p>
 <p class="caption cover-cap">ECG real de PTB-XL: registro {sup["NORM"]["ecg_id"]}, derivación II, 10 segundos. Uso académico, sin aplicación clínica.</p>'''),
         ("", f'''
@@ -296,6 +297,7 @@ svg .markt{font:700 14px "Cabinet Grotesk",Arial;fill:var(--contraste);text-anch
 .lede{font-size:26px;color:var(--contraste);margin-top:18px}
 .cover-trace{position:absolute;left:0;right:0;top:372px;height:170px;background:#fff}
 .cover-trace svg{display:block}
+.authors{position:absolute;left:72px;bottom:126px;font-size:20px;color:var(--tinta)}
 .meta{position:absolute;left:72px;bottom:96px;font-size:18px;font-weight:700;color:var(--azul)}
 .cover-cap{position:absolute;left:72px;bottom:58px;margin:0}
 /* 12 derivaciones */
