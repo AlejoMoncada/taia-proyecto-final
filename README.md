@@ -177,9 +177,12 @@ Video de 1:25 que acompaña la sustentación: recorre el problema, el diseño de
 por paciente y los resultados. La narración está en español y la locución se generó con TTS; los números que
 menciona la voz son los de la tabla comparativa de arriba.
 
-[![Fotograma del video](video/renders/verificacion-40s.png)](video/renders/sustentacion.mp4)
+[![Ver el video de sustentación](video/renders/verificacion-40s.png)](https://alejomoncada.github.io/taia-proyecto-final/)
 
-[Abrir el video](video/renders/sustentacion.mp4) (MP4, 1920×1080, 30 fps, 13,7 MB).
+**[Ver el video en el navegador](https://alejomoncada.github.io/taia-proyecto-final/)**: página del proyecto con el video
+incrustado, los PDF de entrega y las fichas. GitHub no reproduce un MP4 del repositorio dentro del README.
+Archivos: [versión web](video/renders/sustentacion_web.mp4) (9 MB) y [original](video/renders/sustentacion.mp4)
+(MP4, 1920×1080, 30 fps, 13,7 MB).
 
 El proyecto está en `video/`: las seis escenas son composiciones HTML (`video/compositions/s1.html` a
 `s6.html`) sobre una composición raíz (`video/index.html`), renderizadas con HyperFrames. `video/SPEC.md`

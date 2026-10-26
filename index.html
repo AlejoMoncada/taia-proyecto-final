@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECG multietiqueta con PTB-XL · TAIA Grupo 9 · Universidad de La Sabana</title>
+<meta name="description" content="Proyecto final TAIA, Grupo 9: clasificación multietiqueta de ECG con PTB-XL. Video de sustentación, informe, diapositivas y código.">
+<style>
+:root{--azul:#001c64;--contraste:#193f9e;--cielo:#e0edff;--tinta:#282828;--gris:#555555}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Cabinet Grotesk",Arial,"Helvetica Neue",sans-serif;color:var(--tinta);background:#fff;line-height:1.5}
+::selection{background:var(--cielo);color:var(--azul)}
+header{border-top:8px solid var(--azul);padding:28px 24px 0;max-width:1040px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:24px}
+header img{height:52px}
+main{max-width:1040px;margin:0 auto;padding:24px}
+h1{font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.02em;color:var(--azul);max-width:820px;text-wrap:balance}
+.lede{font-size:19px;color:var(--contraste);margin-top:12px}
+.authors{font-size:16px;margin-top:6px}
+video{display:block;width:100%;aspect-ratio:16/9;background:#000;margin:28px 0 8px}
+.caption{font-size:14px;color:var(--gris)}
+h2{font-size:22px;color:var(--azul);margin:36px 0 12px}
+ul{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:720px){ul{grid-template-columns:1fr}}
+li a{display:block;padding:14px 16px;background:var(--cielo);color:var(--azul);text-decoration:none;font-weight:700}
+li a:hover,li a:focus-visible{background:var(--azul);color:#fff;outline:none}
+li span{display:block;font-weight:400;font-size:14px}
+a{color:var(--contraste);text-underline-offset:3px}
+footer{max-width:1040px;margin:40px auto 0;padding:16px 24px 32px;border-top:1px solid var(--cielo);font-size:14px;color:var(--gris)}
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/brand/logo_unisabana.png" alt="Universidad de La Sabana">
+</header>
+<main>
+  <h1>¿Una red que lee la señal cruda supera a 210 características hechas a mano?</h1>
+  <p class="lede">Clasificación multietiqueta de ECG con PTB-XL · Proyecto final TAIA, Grupo 9</p>
+  <p class="authors">Edgar Julian Mendez Ortegon · Noel Eduardo Perez Barrios · William Alejandro Moncada Cifuentes</p>
+
+  <video controls preload="metadata" poster="video/renders/verificacion-40s.png">
+    <source src="video/renders/sustentacion_web.mp4" type="video/mp4">
+    Tu navegador no reproduce video. <a href="video/renders/sustentacion_web.mp4">Descargar el video</a>.
+  </video>
+  <p class="caption">Video de sustentación (1:25). Maestría en Inteligencia Artificial, Universidad de La Sabana, octubre de 2026.</p>
+
+  <h2>Documentos</h2>
+  <ul>
+    <li><a href="output/pdf/ejecucion.pdf">Ejecución y validación<span>A2 · PDF</span></a></li>
+    <li><a href="output/pdf/informe.pdf">Informe final<span>A3 · PDF, con ficha de datos</span></a></li>
+    <li><a href="output/pdf/diapositivas.pdf">Diapositivas<span>A3 · PDF, 11 diapositivas</span></a></li>
+    <li><a href="https://github.com/AlejoMoncada/taia-proyecto-final/blob/main/docs/ficha_datos.md">Ficha de datos<span>PTB-XL 1.0.3</span></a></li>
+    <li><a href="https://github.com/AlejoMoncada/taia-proyecto-final/blob/main/docs/ficha_modelo.md">Ficha del modelo<span>Cinco modelos comparados</span></a></li>
+    <li><a href="https://github.com/AlejoMoncada/taia-proyecto-final">Código y reproducción<span>Repositorio en GitHub</span></a></li>
+  </ul>
+</main>
+<footer>Datos: PTB-XL 1.0.3 (Wagner et al., 2020), CC BY 4.0. Uso académico, sin aplicación clínica.</footer>
+</body>
+</html>
