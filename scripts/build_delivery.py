@@ -26,7 +26,7 @@ DOCS = ROOT / "docs"
 EVIDENCE = DOCS / "evidence"
 OUT = ROOT / "output" / "pdf"
 NAVY, TEAL = colors.HexColor("#16324f"), colors.HexColor("#007f82")
-FILES = {"plan.pdf": (1, 6), "informe.pdf": (8, 12), "ejecucion.pdf": (1, 8), "diapositivas.pdf": (8, 12)}
+FILES = {"plan.pdf": (1, 6), "informe.pdf": (8, 12), "ejecucion.pdf": (1, 6), "diapositivas.pdf": (8, 12)}
 MODELS = ["random_forest", "xgboost", "xgboost_tuned", "cnn1d", "cnn_lstm"]
 
 

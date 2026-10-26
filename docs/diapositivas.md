@@ -32,25 +32,26 @@ AdamW, BCE, parada temprana y mejor época restaurada. Máximo 60 épocas o 5 mi
 
 Test fijo; media ± desviación entre tres semillas. La desviación NO es un intervalo de confianza sobre pacientes nuevos.
 ---
-# Abordaje del Desbalance y Significancia Estadística
+# Desbalance y significancia estadística
 {{figure:f1_per_class.png}}
 
-Se reemplazó la función BCE por Multilabel Focal Loss ($\gamma=2.0, \alpha=0.25$). Esto penaliza el exceso de verdaderos negativos "fáciles" (NORM) y reorienta los gradientes hacia patologías minoritarias (HYP).
-Las diferencias de rendimiento ya no se basan solo en 3 semillas. Se implementó un Bootstrap Pareado a Nivel de Paciente (1,000 iteraciones) para obtener Intervalos de Confianza (95% CI) rigurosos.
+Las redes se entrenaron con BCE sin reponderación de clases. HYP, la clase menos frecuente, se queda cerca de F1 0,60 en todos los modelos.
+
+La desviación entre tres semillas mide variación del entrenamiento, no incertidumbre sobre pacientes nuevos. Falta una prueba de significancia entre modelos.
 ---
 # Se conserva la mejor época de validación
 {{figure:curves.png}}
 
 Curvas separadas de las semillas 42, 43 y 44. Dos trials de CNN 1D fueron lentos y llegaron solo a cuatro épocas; la causa en cuDNN es una hipótesis.
 ---
-# Calibración Mejorada - Temperature Scaling
+# Calibración medida, no corregida
 {{figure:reliability_test.png}}
 
 ECE media: XGBoost 0,049; CNN 1D 0,040; CNN+LSTM 0,039. Diagramas: semilla 42.
 
-Se aplicó Temperature Scaling optimizado con L-BFGS estrictamente sobre los logits de validación.
+No se aplicó recalibración postentrenamiento. Un escalado de temperatura ajustado en validación queda como trabajo pendiente.
 
-Esto permitió una reducción drástica del Expected Calibration Error (ECE) sin alterar el ROC-AUC macro predictivo ni incurrir en fuga de datos (data leakage) hacia el conjunto de prueba. Ahora las probabilidades emitidas son confiables.
+Que las redes calibren mejor en esta partición no garantiza probabilidades confiables en otro hospital.
 ---
 # La calidad tiene un costo distinto
 {{figure:times.png}}
@@ -60,8 +61,8 @@ Clásicos en CPU y redes en GPU. CNN+LSTM tarda más en entrenar que CNN 1D; no 
 # Conclusión y trabajo pendiente
 Las redes superan descriptivamente a estas líneas base en esta partición; HYP permanece cerca de F1 0,60. No se afirma equivalencia entre redes ni utilidad clínica.
 
-Las redes neuronales, ajustadas con funciones de pérdida asimétricas (Focal Loss), lograron una representación superior de la señal de ECG frente a la extracción de características manuales (XGBoost).
+Las redes que leen la señal cruda rinden mejor que la extracción de características manuales con XGBoost, sin que eso demuestre superioridad clínica.
 
-La incertidumbre del modelo fue cuantificada de manera formal mediante Bootstrap Pareado por Paciente y la calibración probabilística se garantizó mediante Temperature Scaling post-entrenamiento.
+Ni la incertidumbre poblacional ni la recalibración se abordaron en esta entrega; quedan como trabajo propuesto.
 
 Fuentes: Wagner et al. (2020), doi:10.1038/s41597-020-0495-6; Strodthoff et al. (2021), doi:10.1109/JBHI.2020.3022989. Resultados y hashes: docs/evidence/manifest.json.

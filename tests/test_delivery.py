@@ -50,7 +50,7 @@ class DeliveryTests(unittest.TestCase):
     def test_build_matches_rubric_and_preserves_draft_status(self):
         from pypdf import PdfReader
 
-        for name, count in {"plan": 5, "informe": 11, "ejecucion": 7, "diapositivas": 10}.items():
+        for name, count in {"plan": 5, "informe": 10, "ejecucion": 6, "diapositivas": 10}.items():
             reader = PdfReader(self.root / "output/pdf" / f"{name}.pdf")
             self.assertEqual(len(reader.pages), count)
             self.assertTrue(all("BORRADOR" in page.extract_text() for page in reader.pages))

@@ -96,13 +96,13 @@ En privacidad, los datos están desidentificados y son públicos bajo CC BY 4.0.
 
 Las mitigaciones hechas hasta ahora son las métricas por clase y las matrices de confusión por clase de la línea base. Quedan planeados, pero no hechos, un reporte de desempeño por sexo y grupo de edad, y un análisis por sitio y por equipo.
 
-Con base en los primeros resultados experimentales que demostraron debilidades en la calibración probabilística (ECE) y el rendimiento en la clase sub-representada HYP, el plan de evaluación se actualizó para incorporar técnicas avanzadas de Deep Learning:
+Con base en los primeros resultados experimentales, que mostraron debilidades en la calibración probabilística (ECE) y en la clase sub-representada HYP, se identificaron tres intervenciones para una etapa posterior. Ninguna está aplicada en los resultados que se reportan:
 
- * En la función de pérdida: Transición de Binary Cross Entropy (BCE) a Focal Loss para equilibrar la penalización asimétrica de clases mayoritarias.
+ * En la función de pérdida: reemplazar Binary Cross Entropy (BCE) por Focal Loss, para equilibrar la penalización asimétrica de clases mayoritarias.
 
- * En la estimación de confianza: Adopción de Temperature Scaling ajustado en validación, asegurando que las probabilidades emitidas por el modelo sean interpretables para futuros sistemas de triaje médico.
+ * En la estimación de confianza: ajustar Temperature Scaling en validación, para que las probabilidades emitidas sean interpretables en un futuro sistema de triaje médico.
 
- * En la validación estadística: Abandono de la simple desviación estándar por semillas en favor de un Bootstrap Pareado a Nivel de Paciente. Esto blinda el experimento contra la dependencia de registros (fuga poblacional) y permite reportar intervalos de confianza del 95% alineados con los estándares de investigación médica de PhysioNet.
+ * En la validación estadística: pasar de la desviación estándar entre semillas a un Bootstrap Pareado a Nivel de Paciente. Esto respeta la dependencia entre registros del mismo paciente y permite reportar intervalos de confianza del 95 %.
 
 ## 8. Arquitectura del código y reproducibilidad
 
@@ -138,7 +138,13 @@ Pendiente: definir con el grupo.
 
 ## 10. Uso de IA
 
-Pendiente: el grupo declara aquí cómo usó herramientas de IA.
+Borrador a confirmar por el grupo. El equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales.
+
+- **Código y pruebas.** Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, con subagentes del mismo asistente para tareas mecánicas: descarga y verificación del dataset, gráficas y revisiones.
+- **Redacción y documentos.** Los borradores de `README.md`, `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md` se redactaron con ese asistente y después los revisó el grupo. El generador `scripts/build_delivery.py` es asistido.
+- **Video de sustentación.** La locución se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames.
+- **Decisiones humanas.** El tema, el diseño de la comparación, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo. Ninguna cifra del informe se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`.
+- **Límites.** Las herramientas de IA pueden introducir errores de forma o de razonamiento; los que queden en este documento son responsabilidad del grupo. No se usó IA para generar datos, etiquetas ni resultados.
 
 ## 11. Referencias
 

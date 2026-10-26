@@ -51,6 +51,10 @@ uv run pytest                             # pruebas
 Toda la configuración (semilla, folds, hiperparámetros) está en `configs/default.yaml`.
 Para probar otra configuración: `uv run python -m ecg.baseline --config configs/otra.yaml`.
 
+Las cifras reportadas usan `deep.loss: bce` y `deep.temperature_scaling: false`, que son los valores
+por defecto. La pérdida focal (`loss: focal`) y el escalado de temperatura ajustado en validación
+están implementados como opción, pero no se usaron en los resultados; activarlos cambia las cifras.
+
 ## Estructura
 
 ```
@@ -137,7 +141,7 @@ diagrama de confiabilidad), tiempo de entrenamiento e inferencia. Los resultados
 ## Paquete de entrega local
 
 Los borradores están en [output/pdf/](output/pdf/): [plan](output/pdf/plan.pdf) (5 páginas),
-[ejecución](output/pdf/ejecucion.pdf) (7), [informe](output/pdf/informe.pdf) (11) y
+[ejecución](output/pdf/ejecucion.pdf) (6), [informe](output/pdf/informe.pdf) (10) y
 [diapositivas](output/pdf/diapositivas.pdf) (10). [Guía de ensayo](docs/guia_sustentacion.md).
 Faltan confirmación del grupo, autores, roles, cronograma, declaración final de IA y fecha de Moodle.
 Se comparten como borradores de revisión, no como una entrega aprobada para subir a Moodle.
