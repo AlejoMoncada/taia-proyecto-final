@@ -1,17 +1,19 @@
 # Guía para ensayar la sustentación
 Objetivo: contar el experimento en diez minutos y poder defender cada decisión. Es una propuesta de ensayo; el grupo debe confirmar el tiempo y repartir las intervenciones. Todos deben estar presentes según la rúbrica.
 
-## Recorrido por las diez diapositivas
-1. Problema y alcance (40 s): explicar por qué el ECG es multietiqueta y aclarar el uso académico.
-2. Datos (60 s): procedencia, licencia, 100 Hz, exclusiones y separación por paciente.
-3. Protocolo (70 s): distinguir train, val y test; explicar selección por AUC y umbrales por F1 en val.
-4. Modelos (70 s): describir características manuales, bloques residuales y función de la LSTM sin leer código.
-5. Resultados (70 s): comparar medias y aclarar qué mide la desviación entre semillas.
-6. Clases (55 s): explicar MI/CD e HYP, sin atribuir una causa que no se investigó.
-7. Curvas (55 s): ubicar sobreajuste, mejor época y el problema de los trials lentos.
-8. Calibración (55 s): una probabilidad alta no asegura corrección; ECE depende de sus bins.
-9. Costo y límites (65 s): CPU/GPU y cómputo desigual; no confundir rapidez con efectividad clínica.
-10. Cierre (60 s): conclusión acotada, pendientes y declaración real del uso de IA. Total: 600 s.
+## Recorrido por las once diapositivas
+Cada título es la idea que hay que dejar; el resto de la diapositiva es la evidencia. No leer el texto: contar el título y señalar la evidencia.
+1. Pregunta (35 s): mostrar el ECG real de la portada y plantear la pregunta. Aclarar el uso académico.
+2. Doce derivaciones (40 s): qué es una derivación, 10 s a 100 Hz, 12 × 1.000 números de entrada.
+3. Cinco diagnósticos (50 s): nombrar las superclases sobre los trazados reales; 24,1 % tiene más de una etiqueta.
+4. Partición (60 s): train ajusta, val elige, test solo se mira al final; pacientes separados y semillas fijas.
+5. Dos lecturas (60 s): 210 características medidas a mano frente a la señal completa; P, QRS y T en el latido real.
+6. Resultado (60 s): F1 macro de 0,69 a 0,75; qué mide la desviación entre semillas y por qué no declaramos ganador entre redes.
+7. Por clase (55 s): la mejora está en infarto y conducción; hipertrofia no cambia, sin atribuir una causa.
+8. Curvas (50 s): mejor época restaurada según AUC en val; los dos trials lentos.
+9. Calibración (50 s): ECE de las tres familias; no se recalibró y qué haría falta.
+10. Costo (50 s): hasta tres veces más entrenamiento; CPU frente a GPU, cómputo no igualado.
+11. Cierre (50 s): lo que afirmamos, lo que no, y el siguiente paso. Total: unos 560 s.
 
 ## Preguntas que cada integrante debe poder responder
 - ¿Por qué no usar accuracy o una matriz de confusión de cinco clases? Las etiquetas coexisten y las clases tienen prevalencias distintas; se usan F1 macro y matrices binarias por clase.

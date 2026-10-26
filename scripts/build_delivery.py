@@ -1,5 +1,8 @@
 """Build or check the local delivery: python scripts/build_delivery.py [--check].
 
+The slide deck is built separately by scripts/build_slides.py (HTML printed to PDF);
+this script only checks it.
+
 Requires reportlab and pypdf in the executing Python environment, not the ML env.
 The checked-in evidence snapshot is input; this script never trains or reads data/.
 """
@@ -170,7 +173,8 @@ def check():
         assert minimum <= len(reader.pages) <= maximum, f"Page limit: {name}: {len(reader.pages)}"
         for page in reader.pages:
             text = page.extract_text()
-            assert len(text) > 150, f"Empty page: {name}"
+            # Las diapositivas tienen poco texto a proposito; el resto debe ser prosa.
+            assert len(text) > (40 if name == "diapositivas.pdf" else 150), f"Empty page: {name}"
             assert "BORRADOR" not in text.upper(), f"Draft mark left: {name}"
             assert "{{" not in text, f"Unresolved directive: {name}"
         print(f"{name}: {len(reader.pages)} pages; text and evidence checks OK")
@@ -188,7 +192,6 @@ def main():
         render(report, OUT / "informe.pdf")
         pages = report.strip().split("\n---\n")
         render("\n---\n".join(pages[i] for i in [2, 3, 4, 5, 7, 8]), OUT / "ejecucion.pdf")
-        render((DOCS / "diapositivas.md").read_text(encoding="utf-8"), OUT / "diapositivas.pdf", slides=True)
     check()
 
 
