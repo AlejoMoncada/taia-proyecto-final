@@ -53,15 +53,22 @@ def thousands(value: float) -> str:
 # ---------------------------------------------------------------- trazados
 
 def trace_svg(samples: list[float], seconds: float, width: int, height: int,
-              label: str | None = None, marks: dict[str, int] | None = None, stroke: float = 1.6) -> str:
-    """Real ECG trace on millimetre paper: 0,2 s per major square, like an electrocardiograph."""
+              label: str | None = None, marks: dict[str, int] | None = None, stroke: float = 1.6,
+              limits: tuple[float, float] | None = None) -> str:
+    """Real ECG trace on millimetre paper: 0,2 s per major square, like an electrocardiograph.
+
+    `limits` fixes the vertical range (in the samples' unit) so several traces share one scale.
+    """
     n = min(len(samples), int(seconds * FS))
     data = samples[:n]
     px_s = width / seconds
     major = px_s * 0.2
-    lo, hi = min(data), max(data)
-    pad = (hi - lo) * 0.12 or 1.0
-    lo, hi = lo - pad, hi + pad
+    if limits:
+        lo, hi = limits
+    else:
+        lo, hi = min(data), max(data)
+        pad = (hi - lo) * 0.12 or 1.0
+        lo, hi = lo - pad, hi + pad
 
     def y(v: float) -> float:
         return height - (v - lo) / (hi - lo) * height
@@ -177,12 +184,19 @@ def build_html() -> str:
     names = {"NORM": "Normal", "MI": "Infarto de miocardio", "STTC": "Alteraciones del ST y la onda T",
              "CD": "Trastorno de conducción", "HYP": "Hipertrofia"}
     ex = json.loads(EXAMPLES.read_text(encoding="utf-8"))["examples"]
+    # One vertical scale (px per mV) for all rows, as on electrocardiograph paper, so the
+    # hypertrophy R wave is visibly taller than the normal one.
+    seconds = 4
+    spans = {c: (min(ex[c]["samples"][:seconds * FS]) - 0.15, max(ex[c]["samples"][:seconds * FS]) + 0.15)
+             for c in names}
+    px_mv = min(48.0, 400 / sum(hi - lo for lo, hi in spans.values()))
     five = "".join(
         f'<div class="dx"><div class="dx-label"><b>{names[c]}</b><span>{ex[c]["finding"]}</span></div>'
-        f'{trace_svg(ex[c]["samples"], 4, 700, 78, stroke=1.5)}'
+        f'{trace_svg(ex[c]["samples"], seconds, 700, round((spans[c][1] - spans[c][0]) * px_mv), stroke=1.5, limits=spans[c])}'
         f'<span class="dx-id">{c} · {"DII" if ex[c]["lead"] == "II" else ex[c]["lead"]}'
         f'<br>ECG {ex[c]["ecg_id"]}</span></div>'
         for c in names)
+    scale_note = "Las cinco filas usan la misma escala vertical, como el papel del electrocardiógrafo."
     order = ["I", "II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"]
     twelve = "".join(f'<div class="lead-cell">{trace_svg(leads[k], 5, 560, 70, label=k, stroke=1.3)}</div>'
                      for k in order)
@@ -204,6 +218,7 @@ def build_html() -> str:
         ("", f'''
 <h2>Cinco diagnósticos que pueden aparecer en el mismo paciente</h2>
 <div class="five">{five}</div>
+<p class="scale-note">{scale_note}</p>
 <div class="facts"><p><b>21.388</b> ECG con diagnóstico de cardiólogo</p><p><b>24,1 %</b> tiene más de una etiqueta</p><p>Por eso es <b>multietiqueta</b>: cinco salidas independientes, no una sola clase</p></div>'''),
         ("", '''
 <h2>El conjunto de prueba no tomó ninguna decisión</h2>
@@ -309,13 +324,14 @@ svg .markt{font:700 14px "Cabinet Grotesk",Arial;fill:var(--contraste);text-anch
 .twelve{display:grid;grid-template-columns:repeat(2,560px);grid-auto-flow:column;grid-template-rows:repeat(6,70px);gap:6px 16px}
 .lead-cell svg{display:block}
 /* cinco diagnosticos */
-.five{display:flex;flex-direction:column;gap:8px;width:1136px}
+.five{display:flex;flex-direction:column;gap:4px;width:1136px}
 .dx{display:grid;grid-template-columns:320px 700px 1fr;align-items:center;gap:16px}
 .dx-label b{display:block;font-size:19px;line-height:1.2}
 .dx-label span{display:block;font-size:15px;line-height:1.3;color:var(--tinta)}
 .dx-id{font-size:13px;color:var(--gris)}
+.scale-note{font-size:13px;color:var(--gris);margin-top:4px}
 .dx svg{display:block}
-.facts{display:flex;gap:44px;margin-top:20px}
+.facts{display:flex;gap:44px;margin-top:12px}
 .facts p{font-size:19px;max-width:360px}
 .facts b{font-size:28px;font-weight:800}
 /* particion */
