@@ -140,8 +140,9 @@ Pendiente: definir con el grupo.
 
 El equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales.
 
-- **Código y pruebas.** Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, con subagentes del mismo asistente para tareas mecánicas: descarga y verificación del dataset, gráficas y revisiones.
-- **Redacción y documentos.** Las primeras versiones de `README.md`, `docs/plan.md`, `docs/informe.md` y las diapositivas se redactaron con ese asistente y después los revisó el grupo. El generador `scripts/build_delivery.py` es asistido.
+- **Herramientas.** Se trabajó sobre el harness Gentle-AI en Pi Code, alternando varios modelos: DeepSeek 4.1 Flash, GLM 5.3, OpenAI Sol 6.1 y Claude (Anthropic). Ningún modelo trabajó solo: se alternaron según la tarea y el grupo revisó lo que producían.
+- **Código y pruebas.** Con esos asistentes se escribió y revisó parte de `src/ecg/` y `tests/`, además de tareas mecánicas como la descarga y verificación del dataset, las gráficas y revisiones.
+- **Redacción y documentos.** Las primeras versiones de `README.md`, `docs/plan.md`, `docs/informe.md` y las diapositivas se redactaron con ayuda de esos asistentes y después las revisó el grupo. Los generadores `scripts/build_delivery.py` y `scripts/build_slides.py` son asistidos.
 - **Video de sustentación.** La locución se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames.
 - **Decisiones humanas.** El tema, el diseño de la comparación, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo. Ninguna cifra del informe se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`.
 - **Límites.** Las herramientas de IA pueden introducir errores de forma o de razonamiento; los que queden en este documento son responsabilidad del grupo. No se usó IA para generar datos, etiquetas ni resultados.
