@@ -44,6 +44,12 @@ deep:
   max_epochs: 60
   max_minutes: 5               # tope de tiempo de pared por entrenamiento
   early_stopping_patience: 8   # epocas sin mejorar ROC-AUC macro en val
+  # Los resultados reportados usan bce y sin recalibrar. focal y temperature_scaling
+  # quedan como opcion para una etapa posterior; activarlos cambia las cifras.
+  loss: bce                    # bce | focal
+  focal_alpha: 0.25
+  focal_gamma: 2.0
+  temperature_scaling: false   # si es true, ajusta una temperatura con los logits de val
   models: [cnn1d, cnn_lstm]
   # Valores por defecto; la busqueda los sobreescribe.
   cnn1d:

@@ -5,8 +5,9 @@ from __future__ import annotations
 import numpy as np
 import pytest
 import torch
+from torch import nn
 
-from ecg.deep import EcgSet, lead_stats, predict_proba, train_model
+from ecg.deep import EcgSet, MultilabelFocalLoss, lead_stats, make_loss, predict_proba, train_model
 from ecg.models import build_model
 from ecg.utils import load_config
 
@@ -83,3 +84,20 @@ def test_train_model_stops_after_one_epoch_when_time_budget_is_zero():
 
     assert len(hist) == 1
     assert info["stop_reason"] == "time_budget"
+
+
+def test_default_config_reproduces_reported_runs():
+    # Las cifras reportadas salen de corridas con BCE y sin recalibrar.
+    assert CFG["deep"]["loss"] == "bce"
+    assert CFG["deep"]["temperature_scaling"] is False
+    assert isinstance(make_loss(CFG["deep"]), nn.BCEWithLogitsLoss)
+    assert isinstance(make_loss({}), nn.BCEWithLogitsLoss)
+
+
+def test_focal_loss_is_opt_in_and_rejects_unknown_losses():
+    loss = make_loss({"loss": "focal", "focal_alpha": 0.25, "focal_gamma": 2.0})
+    assert isinstance(loss, MultilabelFocalLoss)
+    logits, targets = torch.tensor([[3.0, -3.0]]), torch.tensor([[1.0, 0.0]])
+    assert loss(logits, targets) < nn.BCEWithLogitsLoss()(logits, targets)
+    with pytest.raises(ValueError):
+        make_loss({"loss": "mse"})
