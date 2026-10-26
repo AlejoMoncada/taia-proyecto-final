@@ -194,7 +194,7 @@ def execution_header():
     return ("# Ejecución y validación: clasificación multietiqueta de ECG con PTB-XL\n"
             "Grupo 9. TAIA, Maestría en Inteligencia Artificial, Universidad de La Sabana. "
             f"Octubre de 2026.{members}\n\n"
-            f"Repositorio: https://{REPO} (rama entrega). Semillas, particiones e hiperparámetros "
+            f"Repositorio: https://{REPO}. Semillas, particiones e hiperparámetros "
             "están en configs/default.yaml.\n\n")
 
 

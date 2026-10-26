@@ -124,7 +124,7 @@ uv run python -m ecg.compare
 uv run pytest -q
 ```
 
-Los pesos permanecen locales por la política del proyecto. La reproducción requiere volver a entrenar o recibirlos mediante un canal autorizado; el repositorio por sí solo no los distribuye. El repositorio público de entrega es https://github.com/AlejoMoncada/taia-proyecto-final (rama `entrega`).
+Los pesos permanecen locales por la política del proyecto. La reproducción requiere volver a entrenar o recibirlos mediante un canal autorizado; el repositorio por sí solo no los distribuye. El repositorio público de entrega es https://github.com/AlejoMoncada/taia-proyecto-final.
 
 Declaración de uso de IA: el equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales. Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, y redactó la primera versión de este informe y de las diapositivas. La locución del video de sustentación se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames. El tema, el diseño experimental, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo; ninguna cifra se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`. El contenido final es responsabilidad de los autores.
 

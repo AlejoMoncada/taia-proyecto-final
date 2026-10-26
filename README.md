@@ -2,8 +2,9 @@
 
 Maestría en IA, Universidad de La Sabana.
 
-Repositorio de trabajo privado: https://github.com/AlejoMoncada/taia-proyecto-final,
-rama `entrega`. El acceso del equipo requiere invitación; la publicación definitiva queda pendiente de autorización.
+Integrantes: Edgar Julian Mendez Ortegon, Noel Eduardo Perez Barrios y William Alejandro Moncada Cifuentes.
+
+Repositorio: https://github.com/AlejoMoncada/taia-proyecto-final
 
 Clasificamos electrocardiogramas de 12 derivaciones en las 5 superclases diagnósticas de PTB-XL
 (NORM, MI, STTC, CD, HYP). Es un problema **multietiqueta**: un mismo ECG puede tener, por ejemplo,
