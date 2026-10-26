@@ -61,6 +61,9 @@ class DeliveryTests(unittest.TestCase):
             self.assertEqual(len(reader.pages), count)
             self.assertFalse(any("BORRADOR" in page.extract_text().upper() for page in reader.pages))
         self.assertIn("0,750", "".join(p.extract_text() for p in PdfReader(self.root / "output/pdf/informe.pdf").pages))
+        first = PdfReader(self.root / "output/pdf/ejecucion.pdf").pages[0].extract_text()
+        for expected in ("Ejecución y validación", "Grupo 9", "https://github.com/AlejoMoncada/taia-proyecto-final"):
+            self.assertIn(expected, first)
 
     def test_check_is_read_only(self):
         before = self.output_hashes()

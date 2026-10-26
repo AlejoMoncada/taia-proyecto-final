@@ -36,6 +36,9 @@ LOGO = ROOT / "assets" / "brand" / "logo_unisabana.png"
 BRAND_FONTS = ROOT / "assets" / "fonts"
 FILES = {"plan.pdf": (1, 6), "informe.pdf": (8, 12), "ejecucion.pdf": (1, 6), "diapositivas.pdf": (8, 12)}
 MODELS = ["random_forest", "xgboost", "xgboost_tuned", "cnn1d", "cnn_lstm"]
+REPO = "github.com/AlejoMoncada/taia-proyecto-final"
+# Nombres completos de los integrantes, tal como deben aparecer en la entrega.
+AUTHORS: list[str] = []
 
 
 def digest(path):
@@ -154,7 +157,7 @@ def render(source, target, slides=False):
         canvas.drawImage(str(LOGO), 42, 12, width=logo_h * 2048 / 541, height=logo_h, mask="auto")
         canvas.setFillColor(NAVY)
         canvas.setFont("Body", 8)
-        canvas.drawRightString(size[0] - 42, 18, f"TAIA / GRUPO 9   {doc.page}")
+        canvas.drawRightString(size[0] - 42, 18, f"TAIA / GRUPO 9 / {REPO}   {doc.page}")
         if doc.page == 1:
             # En A4 el logo cabe en el margen superior; en diapositivas hay espacio junto al titulo.
             cover_h, top = (34, 22) if slides else (17, 13)
@@ -164,6 +167,16 @@ def render(source, target, slides=False):
 
     SimpleDocTemplate(str(target), pagesize=size, rightMargin=42, leftMargin=42,
                       topMargin=32, bottomMargin=42).build(story, onFirstPage=frame, onLaterPages=frame)
+
+
+def execution_header():
+    """Opening lines of the A2 PDF: title, group, members and repository link."""
+    members = f" Integrantes: {', '.join(AUTHORS)}." if AUTHORS else ""
+    return ("# Ejecución y validación: clasificación multietiqueta de ECG con PTB-XL\n"
+            "Grupo 9. TAIA, Maestría en Inteligencia Artificial, Universidad de La Sabana. "
+            f"Octubre de 2026.{members}\n\n"
+            f"Repositorio: https://{REPO} (rama entrega). Semillas, particiones e hiperparámetros "
+            "están en configs/default.yaml.\n\n")
 
 
 def check():
@@ -191,7 +204,8 @@ def main():
         render((DOCS / "plan.md").read_text(encoding="utf-8"), OUT / "plan.pdf")
         render(report, OUT / "informe.pdf")
         pages = report.strip().split("\n---\n")
-        render("\n---\n".join(pages[i] for i in [2, 3, 4, 5, 7, 8]), OUT / "ejecucion.pdf")
+        render("\n---\n".join([execution_header() + pages[2]] + [pages[i] for i in [3, 4, 5, 7, 8]]),
+               OUT / "ejecucion.pdf")
     check()
 
 
