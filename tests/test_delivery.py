@@ -53,7 +53,7 @@ class DeliveryTests(unittest.TestCase):
         for name, count in {"plan": 5, "informe": 10, "ejecucion": 6, "diapositivas": 10}.items():
             reader = PdfReader(self.root / "output/pdf" / f"{name}.pdf")
             self.assertEqual(len(reader.pages), count)
-            self.assertTrue(all("BORRADOR" in page.extract_text() for page in reader.pages))
+            self.assertFalse(any("BORRADOR" in page.extract_text().upper() for page in reader.pages))
         self.assertIn("0,750", "".join(p.extract_text() for p in PdfReader(self.root / "output/pdf/informe.pdf").pages))
 
     def test_check_is_read_only(self):

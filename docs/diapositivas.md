@@ -1,5 +1,5 @@
 # ECG multietiqueta con PTB-XL
-Grupo 9 - TAIA - Universidad de La Sabana. Borrador para revisión; autores pendientes.
+Grupo 9 - TAIA - Universidad de La Sabana.
 
 ¿Qué aporta una red sobre la señal frente a una línea base de características manuales?
 

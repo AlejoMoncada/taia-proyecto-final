@@ -36,6 +36,7 @@ Requiere [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync                                   # instala dependencias (versiones fijadas en uv.lock)
+# sin uv: pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu126
 uv run python -m ecg.data                 # descarga PTB-XL, hace el split y cachea las señales
 uv run python -m ecg.baseline             # línea base clásica (features + RF / XGBoost)
 uv run python -m ecg.tune_xgb             # búsqueda de XGBoost en val + 3 semillas
@@ -138,14 +139,13 @@ Fichas: `docs/ficha_datos.md` y `docs/ficha_modelo.md`. Plan: `docs/plan.md`.
 F1 macro y por clase, ROC-AUC macro y por clase, matriz de confusión por clase, calibración (Brier, ECE y
 diagrama de confiabilidad), tiempo de entrenamiento e inferencia. Los resultados quedan en `outputs/<modelo>/`.
 
-## Paquete de entrega local
+## Documentos de entrega
 
-Los borradores están en [output/pdf/](output/pdf/): [plan](output/pdf/plan.pdf) (5 páginas),
+Los documentos están en [output/pdf/](output/pdf/): [plan](output/pdf/plan.pdf) (5 páginas),
 [ejecución](output/pdf/ejecucion.pdf) (6), [informe](output/pdf/informe.pdf) (10) y
 [diapositivas](output/pdf/diapositivas.pdf) (10). [Guía de ensayo](docs/guia_sustentacion.md).
-Faltan confirmación del grupo, autores, roles, cronograma, declaración final de IA y fecha de Moodle.
-Se comparten como borradores de revisión, no como una entrega aprobada para subir a Moodle.
-Los análisis por subgrupos, bootstrap y recalibración siguen pendientes.
+El análisis por subgrupos, la prueba estadística entre modelos y la recalibración no se hicieron;
+el informe los trata como limitaciones.
 
 Las fuentes editables son `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md`.
 `docs/evidence/` conserva tablas, figuras y hashes de la evidencia existente, sin datos individuales ni pesos.

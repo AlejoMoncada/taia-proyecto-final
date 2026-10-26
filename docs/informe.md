@@ -1,6 +1,6 @@
 # Clasificación multietiqueta de ECG con PTB-XL
 ## Resumen y alcance
-Proyecto final TAIA, Grupo 9. Maestría en Inteligencia Artificial, Universidad de La Sabana. Borrador técnico para revisión del grupo; autores y fecha de entrega por confirmar.
+Proyecto final TAIA, Grupo 9. Maestría en Inteligencia Artificial, Universidad de La Sabana. Octubre de 2026.
 
 Comparamos modelos clásicos y redes profundas para identificar cinco superclases diagnósticas en ECG de 12 derivaciones: NORM, MI, STTC, CD e HYP. Un registro puede tener varias etiquetas; no son cinco categorías excluyentes. El objetivo es medir calidad predictiva, calibración y costo con una partición por paciente, no construir un dispositivo médico.
 
@@ -124,8 +124,6 @@ uv run pytest -q
 
 Los pesos permanecen locales por la política del proyecto. La reproducción requiere volver a entrenar o recibirlos mediante un canal autorizado; el repositorio por sí solo no los distribuye. El repositorio de entrega está en GitHub (rama `entrega`), con acceso restringido al equipo mientras no se autorice otra cosa.
 
-Pendiente del grupo: confirmar tema y autores, asignar responsables de revisión técnica, informe, subida y defensa; aprobar un cronograma de cierre. Propuesta de secuencia, no un compromiso de fechas: revisión de cifras y fichas, corrección del borrador, ensayo de diez minutos y carga por el responsable habitual. Verificar en Moodle la fecha vigente.
-
-Declaración de uso de IA (borrador a confirmar por cada integrante): el equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales. Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, y redactó los borradores de este informe y de las diapositivas. La locución del video de sustentación se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames. El tema, el diseño experimental, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo; ninguna cifra se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`. Cada integrante debe confirmar qué herramientas usó y qué partes verificó. Este texto no acredita una revisión humana que todavía no consta ni sustituye la responsabilidad de los autores.
+Declaración de uso de IA: el equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales. Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, y redactó la primera versión de este informe y de las diapositivas. La locución del video de sustentación se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames. El tema, el diseño experimental, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo; ninguna cifra se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`. El contenido final es responsabilidad de los autores.
 
 Referencias: [1] Wagner et al. (2020), doi:10.1038/s41597-020-0495-6; dataset PTB-XL 1.0.3, https://physionet.org/content/ptb-xl/1.0.3/. [2] Strodthoff et al. (2021), doi:10.1109/JBHI.2020.3022989. Evidencia interna: ficha_datos.md, ficha_modelo.md, evidence/ y configs/default.yaml.

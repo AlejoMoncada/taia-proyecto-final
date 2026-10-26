@@ -133,12 +133,12 @@ def render(source, target, slides=False):
 
     def frame(canvas, doc):
         canvas.setTitle(target.stem + " - TAIA Grupo 9")
-        canvas.setAuthor("Grupo 9 - autores pendientes de confirmación")
+        canvas.setAuthor("Grupo 9 - TAIA, Universidad de La Sabana")
         canvas.setFillColor(TEAL)
         canvas.rect(0, size[1] - 10, size[0], 10, fill=1, stroke=0)
         canvas.setFillColor(NAVY)
         canvas.setFont("Body", 8)
-        canvas.drawString(42, 22, "TAIA / GRUPO 9 / BORRADOR PARA REVISIÓN - NO ES UNA ENTREGA APROBADA")
+        canvas.drawString(42, 22, "TAIA / GRUPO 9 / UNIVERSIDAD DE LA SABANA")
         canvas.drawRightString(size[0] - 42, 22, str(doc.page))
 
     SimpleDocTemplate(str(target), pagesize=size, rightMargin=42, leftMargin=42,
@@ -152,10 +152,8 @@ def check():
         assert minimum <= len(reader.pages) <= maximum, f"Page limit: {name}: {len(reader.pages)}"
         for page in reader.pages:
             text = page.extract_text()
-            #EJMO-Ini
-            #assert len(text) > 150 and "BORRADOR" in text, f"Empty or unmarked page: {name}"
-            #assert len(text) > 150, f"Empty or unmarked page: {name}"
-            #EJMO-Fin
+            assert len(text) > 150, f"Empty page: {name}"
+            assert "BORRADOR" not in text.upper(), f"Draft mark left: {name}"
             assert "{{" not in text, f"Unresolved directive: {name}"
         print(f"{name}: {len(reader.pages)} pages; text and evidence checks OK")
 

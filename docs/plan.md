@@ -2,7 +2,7 @@
 
 Proyecto final TAIA — Grupo 9 — Maestría en IA, Universidad de La Sabana
 
-Borrador, 14 de octubre de 2026. Autores: Pendiente.
+14 de octubre de 2026. Grupo 9.
 
 ## 1. Problema y alcance
 
@@ -138,10 +138,10 @@ Pendiente: definir con el grupo.
 
 ## 10. Uso de IA
 
-Borrador a confirmar por el grupo. El equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales.
+El equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales.
 
 - **Código y pruebas.** Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, con subagentes del mismo asistente para tareas mecánicas: descarga y verificación del dataset, gráficas y revisiones.
-- **Redacción y documentos.** Los borradores de `README.md`, `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md` se redactaron con ese asistente y después los revisó el grupo. El generador `scripts/build_delivery.py` es asistido.
+- **Redacción y documentos.** Las primeras versiones de `README.md`, `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md` se redactaron con ese asistente y después los revisó el grupo. El generador `scripts/build_delivery.py` es asistido.
 - **Video de sustentación.** La locución se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames.
 - **Decisiones humanas.** El tema, el diseño de la comparación, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo. Ninguna cifra del informe se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`.
 - **Límites.** Las herramientas de IA pueden introducir errores de forma o de razonamiento; los que queden en este documento son responsabilidad del grupo. No se usó IA para generar datos, etiquetas ni resultados.
