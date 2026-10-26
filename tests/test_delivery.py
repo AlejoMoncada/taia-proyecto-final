@@ -37,7 +37,7 @@ class DeliveryTests(unittest.TestCase):
         shutil.copytree(ROOT / "assets/brand", self.root / "assets/brand")
         if (ROOT / "assets/fonts").exists():
             shutil.copytree(ROOT / "assets/fonts", self.root / "assets/fonts")
-        for name in ("plan.md", "informe.md"):
+        for name in ("plan.md", "informe.md", "ficha_datos.md"):
             shutil.copyfile(ROOT / "docs" / name, self.root / "docs" / name)
         # The deck comes from scripts/build_slides.py; the build only checks it.
         (self.root / "output/pdf").mkdir(parents=True)
@@ -56,7 +56,7 @@ class DeliveryTests(unittest.TestCase):
     def test_build_matches_rubric_and_preserves_draft_status(self):
         from pypdf import PdfReader
 
-        for name, count in {"plan": 5, "informe": 9, "ejecucion": 5, "diapositivas": 11}.items():
+        for name, count in {"plan": 5, "informe": 10, "ejecucion": 5, "diapositivas": 11}.items():
             reader = PdfReader(self.root / "output/pdf" / f"{name}.pdf")
             self.assertEqual(len(reader.pages), count)
             self.assertFalse(any("BORRADOR" in page.extract_text().upper() for page in reader.pages))

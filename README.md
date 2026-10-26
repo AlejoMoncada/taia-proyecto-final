@@ -142,7 +142,7 @@ diagrama de confiabilidad), tiempo de entrenamiento e inferencia. Los resultados
 ## Documentos de entrega
 
 Los documentos están en [output/pdf/](output/pdf/): [plan](output/pdf/plan.pdf) (5 páginas),
-[ejecución](output/pdf/ejecucion.pdf) (5), [informe](output/pdf/informe.pdf) (9) y
+[ejecución](output/pdf/ejecucion.pdf) (5), [informe](output/pdf/informe.pdf) (10, con la ficha de datos como anexo) y
 [diapositivas](output/pdf/diapositivas.pdf) (11). [Guía de ensayo](docs/guia_sustentacion.md).
 El análisis por subgrupos, la prueba estadística entre modelos y la recalibración no se hicieron;
 el informe los trata como limitaciones.

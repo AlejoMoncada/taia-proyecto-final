@@ -58,10 +58,11 @@ def verify_evidence():
 
 def markup(text):
     text = escape(text).replace("`", "")
-    return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
+    text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
+    return re.sub(r"(?<![*\w])\*([^*\s][^*]*?)\*(?![*\w])", r"<i>\1</i>", text)
 
 
-def render(source, target, slides=False, keep=260):
+def render(source, target, slides=False, keep=110):
     size = (960, 540) if slides else A4
     width = size[0] - 84
     regular, bold = BRAND_FONTS / "CabinetGrotesk-Regular.ttf", BRAND_FONTS / "CabinetGrotesk-Bold.ttf"
@@ -181,6 +182,12 @@ def render(source, target, slides=False, keep=260):
                       topMargin=32, bottomMargin=42).build(story, onFirstPage=frame, onLaterPages=frame)
 
 
+def datasheet_annex():
+    """docs/ficha_datos.md as the report's annex (A3 asks for the datasheet)."""
+    text = (DOCS / "ficha_datos.md").read_text(encoding="utf-8")
+    return re.sub(r"^# Ficha de datos", "# Anexo. Ficha de datos", text, count=1, flags=re.M)
+
+
 def execution_header():
     """Opening lines of the A2 PDF: title, group, members and repository link."""
     members = f" Integrantes: {', '.join(AUTHORS)}." if AUTHORS else ""
@@ -214,8 +221,7 @@ def main():
         OUT.mkdir(parents=True, exist_ok=True)
         report = (DOCS / "informe.md").read_text(encoding="utf-8")
         render((DOCS / "plan.md").read_text(encoding="utf-8"), OUT / "plan.pdf")
-        # The report keeps more sections on their own page so it stays within 8-12 pages.
-        render(report, OUT / "informe.pdf", keep=420)
+        render(report + "\n---\n" + datasheet_annex(), OUT / "informe.pdf")
         pages = report.strip().split("\n---\n")
         render("\n---\n".join([execution_header() + pages[2]] + [pages[i] for i in [3, 4, 5, 7, 8]]),
                OUT / "ejecucion.pdf")
