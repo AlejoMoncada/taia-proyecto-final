@@ -56,14 +56,16 @@ La tabla usa el fold 10, con 2.158 ECG, y las semillas 42, 43 y 44. El símbolo 
 
 {{results}}
 
-{{figure:f1_per_class.png}}
+{{figure:f1_per_class.png|175}}
+
+{{per_class}}
 
 Las ganancias descriptivas frente a XGBoost por defecto son 0,052 de F1 para CNN 1D y 0,058 para CNN+LSTM. En HYP no hay una mejora clara: los valores medios siguen cerca de 0,60. Ajustar XGBoost eleva el AUC de 0,891 a 0,894, pero no mejora F1 ni calibración. Optimizar AUC no garantiza mejorar todas las métricas.
 
 El desbalance de PTB-XL, con NORM como la clase más frecuente y HYP como la menos frecuente, explica en parte el techo de HYP, que ronda F1 0,60 en todos los modelos. Las redes de esta corrida se entrenaron con `BCEWithLogitsLoss`, sin reponderación de clases ni pérdidas asimétricas, y no se aplicó recalibración postentrenamiento. Atacar esos dos frentes con una pérdida focal y con un escalado de temperatura ajustado en validación son las dos intervenciones que el grupo identificó como siguientes pasos; ninguna está aplicada en los resultados de arriba y por eso no se reportan cifras de ellas.
 ---
 ## Aprendizaje y selección en validación
-{{figure:curves.png}}
+{{figure:curves.png|360}}
 
 Las curvas permiten comparar pérdida de entrenamiento y validación y comprobar la parada temprana. Se muestran por separado las semillas 42, 43 y 44, no una curva promedio. La evaluación final restaura la mejor época, que puede ser anterior al último punto dibujado.
 
@@ -122,7 +124,7 @@ uv run python -m ecg.compare
 uv run pytest -q
 ```
 
-Los pesos permanecen locales por la política del proyecto. La reproducción requiere volver a entrenar o recibirlos mediante un canal autorizado; el repositorio por sí solo no los distribuye. El repositorio de entrega está en GitHub (rama `entrega`), con acceso restringido al equipo mientras no se autorice otra cosa.
+Los pesos permanecen locales por la política del proyecto. La reproducción requiere volver a entrenar o recibirlos mediante un canal autorizado; el repositorio por sí solo no los distribuye. El repositorio público de entrega es https://github.com/AlejoMoncada/taia-proyecto-final (rama `entrega`).
 
 Declaración de uso de IA: el equipo usó asistentes de IA como apoyo de implementación y redacción, no como autor de las decisiones experimentales. Claude (Anthropic) escribió y revisó buena parte de `src/ecg/` y `tests/`, y redactó la primera versión de este informe y de las diapositivas. La locución del video de sustentación se generó con texto a voz (Gemini TTS, Google AI Studio) sobre un guion aprobado por el grupo, y el video se renderizó con HyperFrames. El tema, el diseño experimental, la partición por paciente, la elección de modelos e hiperparámetros, la lectura de los resultados y la validación final son del grupo; ninguna cifra se aceptó sin contrastarla con los artefactos de las corridas en `outputs/`. El contenido final es responsabilidad de los autores.
 

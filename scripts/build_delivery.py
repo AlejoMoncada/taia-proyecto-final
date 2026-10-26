@@ -116,10 +116,21 @@ def render(source, target, slides=False):
                 names = ["RF", "XGB", "XGB ajustado", "CNN 1D", "CNN+LSTM"]
                 table([["Modelo", "F1 macro", "AUC macro", "Brier", "ECE", "Final (s)", "Búsqueda (s)"]]
                       + [[name] + [row[c].replace(".", ",") for c in columns] for name, row in zip(names, data)])
+            elif line == "{{per_class}}":
+                flush()
+                with (EVIDENCE / "table_test.csv").open(encoding="utf-8", newline="") as stream:
+                    data = list(csv.DictReader(stream))
+                classes = ["NORM", "MI", "STTC", "CD", "HYP"]
+                names = ["RF", "XGB", "XGB ajustado", "CNN 1D", "CNN+LSTM"]
+                table([["F1 por clase"] + classes]
+                      + [[name] + [row[f"F1 {c}"].replace(".", ",") for c in classes] for name, row in zip(names, data)])
             elif line.startswith("{{figure:"):
                 flush()
-                image = Image(str(EVIDENCE / line[9:-2]))
-                scale = min(width / image.imageWidth, (250 if slides else 205) / image.imageHeight)
+                # {{figure:name.png}} or {{figure:name.png|max_height_pt}}
+                name, _, limit = line[9:-2].partition("|")
+                image = Image(str(EVIDENCE / name))
+                height = float(limit) if limit else (250 if slides else 205)
+                scale = min(width / image.imageWidth, height / image.imageHeight)
                 image.drawWidth, image.drawHeight = image.imageWidth * scale, image.imageHeight * scale
                 story.extend([image, Spacer(1, 12)])
             elif line.startswith("|"):
