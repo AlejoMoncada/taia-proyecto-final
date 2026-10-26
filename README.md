@@ -148,6 +148,10 @@ El análisis por subgrupos, la prueba estadística entre modelos y la recalibrac
 el informe los trata como limitaciones.
 
 Las fuentes editables son `docs/plan.md`, `docs/informe.md` y `docs/diapositivas.md`.
+Los PDF usan la paleta y el logo de la Universidad de La Sabana (`assets/brand/`) y la tipografía
+Cabinet Grotesk. Esa fuente tiene licencia de Indian Type Foundry y no se versiona: para regenerar
+los PDF con ella, poner `CabinetGrotesk-Regular.ttf` y `CabinetGrotesk-Bold.ttf` en `assets/fonts/`.
+Si no están, `scripts/build_delivery.py` usa Vera y el número de páginas puede variar.
 `docs/evidence/` conserva tablas, figuras y hashes de la evidencia existente, sin datos individuales ni pesos.
 El generador no entrena ni consulta test: usa ese snapshot.
 

@@ -34,6 +34,9 @@ class DeliveryTests(unittest.TestCase):
         (self.root / "scripts").mkdir()
         shutil.copyfile(ROOT / "scripts/build_delivery.py", self.root / "scripts/build_delivery.py")
         shutil.copytree(ROOT / "docs/evidence", self.root / "docs/evidence")
+        shutil.copytree(ROOT / "assets/brand", self.root / "assets/brand")
+        if (ROOT / "assets/fonts").exists():
+            shutil.copytree(ROOT / "assets/fonts", self.root / "assets/fonts")
         for name in ("plan.md", "informe.md", "diapositivas.md"):
             shutil.copyfile(ROOT / "docs" / name, self.root / "docs" / name)
         result = self.run_cli()

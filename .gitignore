@@ -41,3 +41,6 @@ dist/
 *.npz
 *.h5
 *.parquet
+
+# Fuentes con licencia ITF (Cabinet Grotesk): se instalan localmente, no se redistribuyen
+assets/fonts/

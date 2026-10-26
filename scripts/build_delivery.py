@@ -25,7 +25,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 EVIDENCE = DOCS / "evidence"
 OUT = ROOT / "output" / "pdf"
-NAVY, TEAL = colors.HexColor("#16324f"), colors.HexColor("#007f82")
+# Paleta institucional de la Universidad de La Sabana (variables --ssa-color-palette-* de unisabana.edu.co).
+NAVY, TEAL = colors.HexColor("#001c64"), colors.HexColor("#193f9e")  # azul Sabana, azul contraste
+SKY, INK = colors.HexColor("#e0edff"), colors.HexColor("#282828")    # azul cielo, negro texto
+LOGO = ROOT / "assets" / "brand" / "logo_unisabana.png"
+# Cabinet Grotesk es la tipografia institucional; tiene licencia ITF y no se versiona.
+BRAND_FONTS = ROOT / "assets" / "fonts"
 FILES = {"plan.pdf": (1, 6), "informe.pdf": (8, 12), "ejecucion.pdf": (1, 6), "diapositivas.pdf": (8, 12)}
 MODELS = ["random_forest", "xgboost", "xgboost_tuned", "cnn1d", "cnn_lstm"]
 
@@ -53,17 +58,21 @@ def markup(text):
 def render(source, target, slides=False):
     size = (960, 540) if slides else A4
     width = size[0] - 84
-    fonts = Path(reportlab.__file__).parent / "fonts"
-    pdfmetrics.registerFont(TTFont("Body", str(fonts / "Vera.ttf")))
-    pdfmetrics.registerFont(TTFont("BodyBold", str(fonts / "VeraBd.ttf")))
+    regular, bold = BRAND_FONTS / "CabinetGrotesk-Regular.ttf", BRAND_FONTS / "CabinetGrotesk-Bold.ttf"
+    if not (regular.exists() and bold.exists()):
+        fonts = Path(reportlab.__file__).parent / "fonts"
+        regular, bold = fonts / "Vera.ttf", fonts / "VeraBd.ttf"
+        print("Cabinet Grotesk no esta en assets/fonts/; se usa Vera.")
+    pdfmetrics.registerFont(TTFont("Body", str(regular)))
+    pdfmetrics.registerFont(TTFont("BodyBold", str(bold)))
     pdfmetrics.registerFontFamily("Body", normal="Body", bold="BodyBold", italic="Body", boldItalic="BodyBold")
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle("Text", fontName="Body", fontSize=17 if slides else 10,
-                             leading=23 if slides else 14, spaceAfter=9, textColor=NAVY))
-    styles.add(ParagraphStyle("TitleX", parent=styles["Text"], fontSize=32 if slides else 21,
-                             leading=38 if slides else 26, spaceAfter=18, textColor=TEAL))
-    styles.add(ParagraphStyle("HeadingX", parent=styles["Text"], fontSize=14,
-                             leading=19, spaceBefore=8, spaceAfter=12, textColor=TEAL))
+                             leading=23 if slides else 14, spaceAfter=9, textColor=INK))
+    styles.add(ParagraphStyle("TitleX", parent=styles["Text"], fontName="BodyBold", fontSize=32 if slides else 21,
+                             leading=38 if slides else 26, spaceAfter=18, textColor=NAVY))
+    styles.add(ParagraphStyle("HeadingX", parent=styles["Text"], fontName="BodyBold", fontSize=14,
+                             leading=19, spaceBefore=8, spaceAfter=12, textColor=NAVY))
     styles.add(ParagraphStyle("CellX", parent=styles["Text"], fontSize=14 if slides else 8,
                              leading=18 if slides else 11, spaceAfter=0))
     story = []
@@ -71,7 +80,7 @@ def render(source, target, slides=False):
     def table(rows):
         cells = [[Paragraph(markup(str(c)), styles["CellX"]) for c in row] for row in rows]
         item = Table(cells, colWidths=[width / len(rows[0])] * len(rows[0]), repeatRows=1, hAlign="LEFT")
-        item.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#dceff0")),
+        item.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), SKY),
                                  ("VALIGN", (0, 0), (-1, -1), "TOP"),
                                  ("LINEBELOW", (0, 0), (-1, 0), 1, TEAL),
                                  ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
@@ -134,12 +143,21 @@ def render(source, target, slides=False):
     def frame(canvas, doc):
         canvas.setTitle(target.stem + " - TAIA Grupo 9")
         canvas.setAuthor("Grupo 9 - TAIA, Universidad de La Sabana")
-        canvas.setFillColor(TEAL)
+        canvas.setFillColor(NAVY)
         canvas.rect(0, size[1] - 10, size[0], 10, fill=1, stroke=0)
+        canvas.setStrokeColor(SKY)
+        canvas.line(42, 34, size[0] - 42, 34)
+        logo_h = 16
+        canvas.drawImage(str(LOGO), 42, 12, width=logo_h * 2048 / 541, height=logo_h, mask="auto")
         canvas.setFillColor(NAVY)
         canvas.setFont("Body", 8)
-        canvas.drawString(42, 22, "TAIA / GRUPO 9 / UNIVERSIDAD DE LA SABANA")
-        canvas.drawRightString(size[0] - 42, 22, str(doc.page))
+        canvas.drawRightString(size[0] - 42, 18, f"TAIA / GRUPO 9   {doc.page}")
+        if doc.page == 1:
+            # En A4 el logo cabe en el margen superior; en diapositivas hay espacio junto al titulo.
+            cover_h, top = (34, 22) if slides else (17, 13)
+            cover_w = cover_h * 2048 / 541
+            canvas.drawImage(str(LOGO), size[0] - 42 - cover_w, size[1] - top - cover_h,
+                             width=cover_w, height=cover_h, mask="auto")
 
     SimpleDocTemplate(str(target), pagesize=size, rightMargin=42, leftMargin=42,
                       topMargin=32, bottomMargin=42).build(story, onFirstPage=frame, onLaterPages=frame)
