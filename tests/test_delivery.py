@@ -64,6 +64,8 @@ class DeliveryTests(unittest.TestCase):
         first = PdfReader(self.root / "output/pdf/ejecucion.pdf").pages[0].extract_text()
         for expected in ("Ejecución y validación", "Grupo 9", "https://github.com/AlejoMoncada/taia-proyecto-final"):
             self.assertIn(expected, first)
+        execution = "".join(p.extract_text() for p in PdfReader(self.root / "output/pdf/ejecucion.pdf").pages)
+        self.assertIn("Errores por clase", execution)
 
     def test_check_is_read_only(self):
         before = self.output_hashes()

@@ -223,7 +223,7 @@ def main():
         render((DOCS / "plan.md").read_text(encoding="utf-8"), OUT / "plan.pdf")
         render(report + "\n---\n" + datasheet_annex(), OUT / "informe.pdf")
         pages = report.strip().split("\n---\n")
-        render("\n---\n".join([execution_header() + pages[2]] + [pages[i] for i in [3, 4, 5, 7, 8]]),
+        render("\n---\n".join([execution_header() + pages[2]] + [pages[i] for i in [3, 4, 5, 6, 7, 8]]),
                OUT / "ejecucion.pdf")
     check()
 
