@@ -150,7 +150,8 @@ el informe los trata como limitaciones.
 
 Las fuentes editables son `docs/plan.md` y `docs/informe.md` (`python scripts/build_delivery.py`).
 Las diapositivas se generan con `uv run python scripts/build_slides.py`: arma `docs/slides/diapositivas.html`
-con trazados reales de PTB-XL (`assets/video/traces.json`) y las cifras de `docs/evidence/`, y lo imprime
+con trazados reales de PTB-XL (`assets/video/traces.json` y, para la diapositiva de los cinco diagnósticos,
+`assets/slides/ecg_examples.json`, que genera `scripts/extract_slide_examples.py`) y las cifras de `docs/evidence/`, y lo imprime
 a PDF con Edge o Chrome sin interfaz.
 Los PDF usan la paleta y el logo de la Universidad de La Sabana (`assets/brand/`) y la tipografía
 Cabinet Grotesk. Esa fuente tiene licencia de Indian Type Foundry y no se versiona: para regenerar

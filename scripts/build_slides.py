@@ -20,6 +20,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "docs" / "evidence"
 TRACES = ROOT / "assets" / "video" / "traces.json"
+# One clinically clear example per superclass (scripts/extract_slide_examples.py).
+EXAMPLES = ROOT / "assets" / "slides" / "ecg_examples.json"
 HTML = ROOT / "docs" / "slides" / "diapositivas.html"
 PDF = ROOT / "output" / "pdf" / "diapositivas.pdf"
 FS = 100  # Hz
@@ -172,11 +174,14 @@ def build_html() -> str:
     ece = {k: es(mean(r[k]["ECE"])) for k in ("xgboost", "cnn1d", "cnn_lstm")}
     ratio = mean(r["cnn_lstm"]["Entrenamiento (s)"]) / mean(r["xgboost"]["Entrenamiento (s)"])
 
-    names = {"NORM": "Normal", "MI": "Infarto de miocardio", "STTC": "Cambios del ST/T",
+    names = {"NORM": "Normal", "MI": "Infarto de miocardio", "STTC": "Alteraciones del ST y la onda T",
              "CD": "Trastorno de conducción", "HYP": "Hipertrofia"}
+    ex = json.loads(EXAMPLES.read_text(encoding="utf-8"))["examples"]
     five = "".join(
-        f'<div class="dx"><div class="dx-label"><b>{c}</b><span>{names[c]}</span></div>'
-        f'{trace_svg(sup[c]["samples"], 4, 760, 78, stroke=1.5)}<span class="dx-id">ECG {sup[c]["ecg_id"]}</span></div>'
+        f'<div class="dx"><div class="dx-label"><b>{names[c]}</b><span>{ex[c]["finding"]}</span></div>'
+        f'{trace_svg(ex[c]["samples"], 4, 700, 78, stroke=1.5)}'
+        f'<span class="dx-id">{c} · {"DII" if ex[c]["lead"] == "II" else ex[c]["lead"]}'
+        f'<br>ECG {ex[c]["ecg_id"]}</span></div>'
         for c in names)
     order = ["I", "II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"]
     twelve = "".join(f'<div class="lead-cell">{trace_svg(leads[k], 5, 560, 70, label=k, stroke=1.3)}</div>'
@@ -305,9 +310,9 @@ svg .markt{font:700 14px "Cabinet Grotesk",Arial;fill:var(--contraste);text-anch
 .lead-cell svg{display:block}
 /* cinco diagnosticos */
 .five{display:flex;flex-direction:column;gap:8px;width:1136px}
-.dx{display:grid;grid-template-columns:250px 760px 1fr;align-items:center;gap:18px}
-.dx-label b{display:block;font-size:20px}
-.dx-label span{font-size:17px;color:var(--tinta)}
+.dx{display:grid;grid-template-columns:320px 700px 1fr;align-items:center;gap:16px}
+.dx-label b{display:block;font-size:19px;line-height:1.2}
+.dx-label span{display:block;font-size:15px;line-height:1.3;color:var(--tinta)}
 .dx-id{font-size:13px;color:var(--gris)}
 .dx svg{display:block}
 .facts{display:flex;gap:44px;margin-top:20px}
